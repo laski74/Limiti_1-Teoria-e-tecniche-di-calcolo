@@ -1,0 +1,1609 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TECHNOWAVE - Missione 2, Episodio 1: L'Orizzonte degli Eventi</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: #fff;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .main-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* HEADER CON LOGO TECHNOWAVE */
+        .technowave-header {
+            background: linear-gradient(45deg, #e94560, #533483);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 15px 40px rgba(233, 69, 96, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .technowave-header::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 10px,
+                rgba(255,255,255,0.05) 10px,
+                rgba(255,255,255,0.05) 20px
+            );
+            animation: slide 20s linear infinite;
+        }
+        
+        @keyframes slide {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+        
+        .technowave-header h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.5);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .technowave-header .episode-title {
+            font-size: 1.8rem;
+            color: #ffd700;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .technowave-header .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* STORY INTRO */
+        .story-intro {
+            background: rgba(255,255,255,0.05);
+            border-left: 5px solid #e94560;
+            padding: 30px;
+            margin-bottom: 30px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .story-intro h2 {
+            color: #ffd700;
+            margin-bottom: 15px;
+            font-size: 1.8rem;
+        }
+        
+        .story-intro p {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+        
+        .story-intro .warning-box {
+            background: rgba(255, 69, 0, 0.2);
+            border: 2px solid #ff4500;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .story-intro .warning-box h3 {
+            color: #ff4500;
+            margin-bottom: 10px;
+        }
+        
+        /* TAB NAVIGATION */
+        .tab-navigation {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
+            background: rgba(255,255,255,0.05);
+            padding: 20px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .tab-button {
+            background: linear-gradient(135deg, #533483, #16213e);
+            color: white;
+            border: 2px solid transparent;
+            padding: 15px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .tab-button::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.3s, height 0.3s;
+        }
+        
+        .tab-button:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+        
+        .tab-button:hover {
+            border-color: #e94560;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(233, 69, 96, 0.4);
+        }
+        
+        .tab-button.active {
+            background: linear-gradient(135deg, #e94560, #ff6b6b);
+            border-color: #ffd700;
+            box-shadow: 0 5px 20px rgba(233, 69, 96, 0.6);
+        }
+        
+        .tab-button span {
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* TAB CONTENT */
+        .tab-content {
+            display: none;
+            background: rgba(255,255,255,0.05);
+            border-radius: 20px;
+            padding: 40px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* SECTION STYLING */
+        .section-header {
+            background: linear-gradient(90deg, #e94560, #533483);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+        
+        .section-header h2 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        
+        .section-header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        /* MISSION BOX */
+        .mission-box {
+            background: linear-gradient(135deg, rgba(83, 52, 131, 0.3), rgba(22, 33, 62, 0.3));
+            border: 3px solid #e94560;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+            position: relative;
+        }
+        
+        .mission-box::before {
+            content: "⚡ MISSIONE ⚡";
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #e94560;
+            padding: 5px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        
+        .mission-box h3 {
+            color: #ffd700;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+        
+        /* GROUP WORK SECTION */
+        .group-work {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(233, 69, 96, 0.1));
+            border: 2px solid #ffd700;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+        
+        .group-work h3 {
+            color: #ffd700;
+            margin-bottom: 15px;
+            text-align: center;
+            font-size: 1.6rem;
+        }
+        
+        .group-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .group-card {
+            background: rgba(255,255,255,0.08);
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .group-card:hover {
+            border-color: #e94560;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(233, 69, 96, 0.3);
+        }
+        
+        .group-card h4 {
+            color: #e94560;
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+        
+        /* EXERCISE BOX */
+        .exercise-box {
+            background: rgba(0, 255, 136, 0.05);
+            border: 2px solid #00ff88;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .exercise-box h4 {
+            color: #00ff88;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+        
+        /* GRAPH CONTAINER */
+        .graph-container {
+            background: rgba(255,255,255,0.95);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .graph-container canvas {
+            max-width: 100%;
+            height: auto;
+            border: 2px solid #333;
+            border-radius: 5px;
+        }
+        
+        .graph-question {
+            color: #1a1a2e;
+            font-weight: bold;
+            margin: 15px 0;
+            font-size: 1.1rem;
+        }
+        
+        .answer-space {
+            background: #f5f5f5;
+            border: 2px dashed #666;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+            min-height: 60px;
+            color: #333;
+        }
+        
+        /* DEFINITION BOX */
+        .definition-box {
+            background: linear-gradient(135deg, rgba(138, 43, 226, 0.2), rgba(75, 0, 130, 0.2));
+            border: 3px solid #9370db;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+        
+        .definition-box h3 {
+            color: #9370db;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+        
+        .definition-box .formal-def {
+            background: rgba(0,0,0,0.3);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-left: 4px solid #9370db;
+        }
+        
+        /* TECHNIQUE CARD */
+        .technique-card {
+            background: rgba(255,255,255,0.08);
+            border: 2px solid #ff6b6b;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 20px 0;
+        }
+        
+        .technique-card h3 {
+            color: #ff6b6b;
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+        
+        .technique-example {
+            background: rgba(0,0,0,0.3);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+        }
+        
+        /* CHECKLIST */
+        .checklist {
+            background: rgba(50, 205, 50, 0.1);
+            border: 2px solid #32cd32;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .checklist h3 {
+            color: #32cd32;
+            margin-bottom: 15px;
+        }
+        
+        .checklist label {
+            display: block;
+            margin: 10px 0;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .checklist label:hover {
+            color: #32cd32;
+            transform: translateX(5px);
+        }
+        
+        .checklist input[type="checkbox"] {
+            margin-right: 10px;
+            transform: scale(1.3);
+            cursor: pointer;
+        }
+        
+        /* HINT BOX */
+        .hint-box {
+            background: rgba(255, 193, 7, 0.1);
+            border: 2px solid #ffc107;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .hint-box::before {
+            content: "💡 ";
+            font-size: 1.5rem;
+        }
+        
+        /* BUTTON STYLES */
+        .action-button {
+            background: linear-gradient(135deg, #e94560, #ff6b6b);
+            color: white;
+            border: none;
+            padding: 15px 35px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(233, 69, 96, 0.4);
+        }
+        
+        .action-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(233, 69, 96, 0.6);
+        }
+        
+        /* TIMER */
+        .timer-display {
+            background: linear-gradient(135deg, #ff4500, #ff6347);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 20px 0;
+            box-shadow: 0 5px 15px rgba(255, 69, 0, 0.5);
+        }
+        
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .technowave-header h1 {
+                font-size: 2rem;
+            }
+            
+            .technowave-header .episode-title {
+                font-size: 1.3rem;
+            }
+            
+            .tab-navigation {
+                flex-direction: column;
+            }
+            
+            .tab-button {
+                width: 100%;
+            }
+            
+            .group-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* PRINT STYLES */
+        @media print {
+            body {
+                background: white;
+                color: black;
+            }
+            
+            .tab-navigation, .action-button {
+                display: none;
+            }
+            
+            .tab-content {
+                display: block !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <!-- HEADER -->
+        <div class="technowave-header">
+            <h1>🌊 TECHNOWAVE 🌊</h1>
+            <div class="episode-title">MISSIONE 2 - EPISODIO 1: L'ORIZZONTE DEGLI EVENTI</div>
+            <div class="subtitle">Quando il confine diventa la soluzione</div>
+        </div>
+        
+        <!-- STORY INTRODUCTION -->
+        <div class="story-intro">
+            <h2>📖 LA STORIA CONTINUA...</h2>
+            <p>
+                Dopo aver completato con successo la <strong>Missione 1</strong> e aver mappato le <strong>funzioni</strong> 
+                del sistema di comunicazione quantistica di Technowave, il vostro team di ingegneri ha scoperto qualcosa 
+                di inquietante. Durante l'analisi dei flussi di dati, avete notato che alcuni segnali si comportano in 
+                modo strano quando si avvicinano a determinati valori critici.
+            </p>
+            <p>
+                Il Dr. Vector, capo del dipartimento di analisi, vi ha convocati nella sala di controllo principale. 
+                Sul mega-schermo olografico appaiono grafici di funzioni che sembrano "esplodere" o "scomparire" 
+                quando si avvicinano a certi punti.
+            </p>
+            <p>
+                <em>"Team,"</em> dice il Dr. Vector con voce grave, <em>"abbiamo un problema. I nostri sistemi stanno 
+                incontrando dei punti critici - li chiamiamo <strong>punti di confine</strong> o <strong>orizzonti degli eventi</strong>. 
+                Non possiamo calcolare esattamente cosa succede in questi punti, ma possiamo prevedere il loro comportamento 
+                studiando cosa accade quando ci avviciniamo sempre di più a essi."</em>
+            </p>
+            <p>
+                <em>"Questa missione richiederà di padroneggiare il concetto di <strong>LIMITE</strong> - l'arma matematica 
+                più potente per comprendere l'infinitamente piccolo e l'infinitamente grande. Senza questa conoscenza, 
+                Technowave non potrà mai raggiungere il pieno potenziale."</em>
+            </p>
+            
+            <div class="warning-box">
+                <h3>⚠️ ALLERTA SISTEMA ⚠️</h3>
+                <p><strong>Criticità:</strong> ALTA</p>
+                <p><strong>Tempo per la soluzione:</strong> 4 settimane terrestri</p>
+                <p><strong>Competenze richieste:</strong> Comprensione dei limiti e delle loro tecniche di calcolo</p>
+            </div>
+        </div>
+        
+        <!-- TAB NAVIGATION -->
+        <div class="tab-navigation">
+            <button class="tab-button active" onclick="openTab('scheda1')">
+                <span>📊 SCHEDA 1<br>Cosa sono i Limiti</span>
+            </button>
+            <button class="tab-button" onclick="openTab('scheda2')">
+                <span>📈 SCHEDA 2<br>Esercizi Grafici</span>
+            </button>
+            <button class="tab-button" onclick="openTab('scheda3')">
+                <span>📐 SCHEDA 3<br>Definizioni</span>
+            </button>
+            <button class="tab-button" onclick="openTab('scheda4')">
+                <span>🔧 SCHEDA 4<br>Forme Indeterminate</span>
+            </button>
+            <button class="tab-button" onclick="openTab('scheda5')">
+                <span>⚡ SCHEDA 5<br>Tecniche di Calcolo</span>
+            </button>
+            <button class="tab-button" onclick="openTab('scheda6')">
+                <span>🎯 SCHEDA 6<br>Missione Finale</span>
+            </button>
+        </div>
+        
+        <!-- SCHEDA 1: COSA SONO I LIMITI -->
+        <div id="scheda1" class="tab-content active">
+            <div class="section-header">
+                <h2>📊 SCHEDA 1: COSA SONO I LIMITI?</h2>
+                <p>Introduzione intuitiva al concetto di limite</p>
+            </div>
+            
+            <div class="mission-box">
+                <h3>Il Messaggio del Dr. Vector</h3>
+                <p>
+                    <em>"Immaginate di essere un drone che si avvicina sempre di più a un punto critico del sistema. 
+                    Non potete raggiungere esattamente quel punto (magari è danneggiato o inaccessibile), 
+                    ma potete avvicinarvi quanto volete. La domanda è: cosa succede al segnale mentre vi avvicinate? 
+                    Dove 'tende' ad andare?"</em>
+                </p>
+                <p>
+                    <strong>Questo è il cuore del concetto di LIMITE:</strong> studiare il comportamento di una funzione 
+                    <strong>vicino</strong> a un punto, non necessariamente <strong>nel</strong> punto.
+                </p>
+            </div>
+            
+            <div class="exercise-box">
+                <h4>🔍 INVESTIGAZIONE 1: Il Primo Approccio</h4>
+                <p>Considerate questa situazione pratica di Technowave:</p>
+                <p style="margin-top: 15px;">
+                    La funzione che descrive la potenza del segnale è:<br>
+                    <strong style="font-size: 1.3rem; color: #00ff88; display: block; margin: 15px 0;">
+                        f(x) = (x² - 4)/(x - 2)
+                    </strong>
+                </p>
+                <p>
+                    Notiamo subito che per <strong>x = 2</strong> la funzione non è definita (divisione per zero!). 
+                    Ma cosa succede se ci avviciniamo a x = 2?
+                </p>
+                
+                <div class="answer-space" style="background: rgba(0,0,0,0.3); color: white;">
+                    <strong>TABELLA DI AVVICINAMENTO:</strong>
+                    <table style="width: 100%; margin-top: 10px; border-collapse: collapse; color: white;">
+                        <tr style="border-bottom: 2px solid #00ff88;">
+                            <th style="padding: 10px;">x (da sinistra)</th>
+                            <th style="padding: 10px;">f(x)</th>
+                            <th style="padding: 10px; border-left: 2px solid #00ff88;">x (da destra)</th>
+                            <th style="padding: 10px;">f(x)</th>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px;">1.9</td>
+                            <td style="padding: 8px;">_____</td>
+                            <td style="padding: 8px; border-left: 2px solid #00ff88;">2.1</td>
+                            <td style="padding: 8px;">_____</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px;">1.99</td>
+                            <td style="padding: 8px;">_____</td>
+                            <td style="padding: 8px; border-left: 2px solid #00ff88;">2.01</td>
+                            <td style="padding: 8px;">_____</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px;">1.999</td>
+                            <td style="padding: 8px;">_____</td>
+                            <td style="padding: 8px; border-left: 2px solid #00ff88;">2.001</td>
+                            <td style="padding: 8px;">_____</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px;">1.9999</td>
+                            <td style="padding: 8px;">_____</td>
+                            <td style="padding: 8px; border-left: 2px solid #00ff88;">2.0001</td>
+                            <td style="padding: 8px;">_____</td>
+                        </tr>
+                    </table>
+                    <p style="margin-top: 15px;"><strong>Conclusione:</strong> Quando x tende a 2, f(x) tende a _____</p>
+                </div>
+            </div>
+            
+            <div class="group-work">
+                <h3>👥 LAVORO DI GRUPPO - Fase 1 (20 minuti)</h3>
+                <p style="text-align: center; margin-bottom: 20px;">
+                    <strong>Ogni gruppo riceve un caso diverso da analizzare</strong>
+                </p>
+                
+                <div class="group-grid">
+                    <div class="group-card">
+                        <h4>🔴 GRUPPO ROSSO</h4>
+                        <p><strong>Funzione:</strong> f(x) = (x² - 9)/(x - 3)</p>
+                        <p><strong>Punto critico:</strong> x → 3</p>
+                        <p><strong>Compito:</strong> Creare la tabella di avvicinamento e disegnare il grafico intuitivo</p>
+                    </div>
+                    
+                    <div class="group-card">
+                        <h4>🔵 GRUPPO BLU</h4>
+                        <p><strong>Funzione:</strong> f(x) = (2x² - 8)/(x - 2)</p>
+                        <p><strong>Punto critico:</strong> x → 2</p>
+                        <p><strong>Compito:</strong> Creare la tabella di avvicinamento e disegnare il grafico intuitivo</p>
+                    </div>
+                    
+                    <div class="group-card">
+                        <h4>🟢 GRUPPO VERDE</h4>
+                        <p><strong>Funzione:</strong> f(x) = (x³ - 1)/(x - 1)</p>
+                        <p><strong>Punto critico:</strong> x → 1</p>
+                        <p><strong>Compito:</strong> Creare la tabella di avvicinamento e disegnare il grafico intuitivo</p>
+                    </div>
+                    
+                    <div class="group-card">
+                        <h4>🟡 GRUPPO GIALLO</h4>
+                        <p><strong>Funzione:</strong> f(x) = 1/x</p>
+                        <p><strong>Punto critico:</strong> x → 0</p>
+                        <p><strong>Compito:</strong> Cosa succede? Questo caso è diverso! Investigate cosa accade da sinistra e da destra.</p>
+                    </div>
+                </div>
+                
+                <div class="hint-box">
+                    <strong>Suggerimento per i gruppi:</strong> Usate la calcolatrice per i valori numerici. 
+                    Discutete insieme cosa osservate: il valore tende a un numero preciso? O "esplode"?
+                </div>
+            </div>
+            
+            <div class="definition-box">
+                <h3>💡 LA PRIMA DEFINIZIONE INTUITIVA</h3>
+                <p style="font-size: 1.2rem; line-height: 1.8;">
+                    Diciamo che il <strong style="color: #ffd700;">limite</strong> di f(x) per x che tende a x₀ è uguale a L, 
+                    e scriviamo:
+                </p>
+                <div style="text-align: center; font-size: 1.5rem; margin: 20px 0; color: #9370db;">
+                    lim<sub style="font-size: 0.8rem;">x→x₀</sub> f(x) = L
+                </div>
+                <p style="font-size: 1.2rem;">
+                    quando i valori di f(x) si avvicinano sempre di più a L mentre x si avvicina sempre di più a x₀ 
+                    (sia da sinistra che da destra).
+                </p>
+            </div>
+            
+            <div class="checklist">
+                <h3>✅ Obiettivi Scheda 1</h3>
+                <label><input type="checkbox"> Compreso il concetto intuitivo di "avvicinarsi"</label>
+                <label><input type="checkbox"> Costruita almeno una tabella di avvicinamento</label>
+                <label><input type="checkbox"> Discusso in gruppo il comportamento di una funzione</label>
+                <label><input type="checkbox"> Compresa la notazione lim<sub>x→x₀</sub> f(x) = L</label>
+            </div>
+        </div>
+        
+        <!-- SCHEDA 2: ESERCIZI GRAFICI -->
+        <div id="scheda2" class="tab-content">
+            <div class="section-header">
+                <h2>📈 SCHEDA 2: LETTURA GRAFICA DEI LIMITI</h2>
+                <p>Imparare a "leggere" i limiti dai grafici</p>
+            </div>
+            
+            <div class="mission-box">
+                <h3>Nuova Missione: Decodifica Visiva</h3>
+                <p>
+                    Il Dr. Vector ha trasmesso i grafici di diverse funzioni di sistema. 
+                    Il vostro compito è determinare i limiti osservando solo il comportamento visivo. 
+                    <strong>Non avete le formule</strong> - dovete affidarvi alla vostra intuizione grafica!
+                </p>
+            </div>
+            
+            <div class="exercise-box">
+                <h4>📊 GRAFICO 1: Funzione con buco</h4>
+                <div class="graph-container">
+                    <p style="color: #1a1a2e; margin-bottom: 15px;">
+                        <strong>Situazione:</strong> Immaginate una retta y = 2x con un "buco" nel punto (2, 4)
+                    </p>
+                    <svg width="600" height="400" style="max-width: 100%;">
+                        <!-- Griglia -->
+                        <defs>
+                            <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                                <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#ddd" stroke-width="1"/>
+                            </pattern>
+                        </defs>
+                        <rect width="600" height="400" fill="url(#grid)" />
+                        
+                        <!-- Assi -->
+                        <line x1="0" y1="200" x2="600" y2="200" stroke="#333" stroke-width="2"/>
+                        <line x1="300" y1="0" x2="300" y2="400" stroke="#333" stroke-width="2"/>
+                        
+                        <!-- Retta y = 2x (prima del buco) -->
+                        <line x1="100" y1="240" x2="380" y2="120" stroke="#e94560" stroke-width="3"/>
+                        
+                        <!-- Retta y = 2x (dopo il buco) -->
+                        <line x1="420" y1="80" x2="500" y2="40" stroke="#e94560" stroke-width="3"/>
+                        
+                        <!-- Buco (cerchio vuoto) -->
+                        <circle cx="400" cy="100" r="8" fill="white" stroke="#e94560" stroke-width="3"/>
+                        
+                        <!-- Etichette -->
+                        <text x="395" y="230" fill="#333" font-size="14">x = 2</text>
+                        <text x="305" y="95" fill="#333" font-size="14">4</text>
+                        
+                        <!-- Freccia che indica il buco -->
+                        <text x="430" y="95" fill="#e94560" font-size="16" font-weight="bold">← BUCO</text>
+                    </svg>
+                    
+                    <div class="graph-question">
+                        <p><strong>Domanda 1:</strong> Quanto vale lim<sub>x→2</sub> f(x)?</p>
+                        <div class="answer-space">Risposta: _____</div>
+                        
+                        <p><strong>Domanda 2:</strong> Quanto vale f(2)?</p>
+                        <div class="answer-space">Risposta: _____ (Definita o non definita?)</div>
+                        
+                        <p><strong>Domanda 3:</strong> Il limite esiste anche se la funzione non è definita in quel punto?</p>
+                        <div class="answer-space">Risposta: _____</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="exercise-box">
+                <h4>📊 GRAFICO 2: Asintoto verticale</h4>
+                <div class="graph-container">
+                    <p style="color: #1a1a2e; margin-bottom: 15px;">
+                        <strong>Situazione:</strong> Funzione tipo f(x) = 1/(x-2)
+                    </p>
+                    <svg width="600" height="400" style="max-width: 100%;">
+                        <!-- Griglia -->
+                        <rect width="600" height="400" fill="url(#grid)" />
+                        
+                        <!-- Assi -->
+                        <line x1="0" y1="200" x2="600" y2="200" stroke="#333" stroke-width="2"/>
+                        <line x1="300" y1="0" x2="300" y2="400" stroke="#333" stroke-width="2"/>
+                        
+                        <!-- Asintoto verticale -->
+                        <line x1="400" y1="0" x2="400" y2="400" stroke="#ff4500" stroke-width="2" stroke-dasharray="5,5"/>
+                        
+                        <!-- Ramo sinistro (tende a -∞) -->
+                        <path d="M 100 240 Q 300 250, 395 380" stroke="#e94560" stroke-width="3" fill="none"/>
+                        
+                        <!-- Ramo destro (tende a +∞) -->
+                        <path d="M 405 20 Q 450 100, 500 160" stroke="#e94560" stroke-width="3" fill="none"/>
+                        
+                        <!-- Frecce -->
+                        <text x="390" y="390" fill="#333" font-size="16">↓</text>
+                        <text x="390" y="20" fill="#333" font-size="16">↑</text>
+                        
+                        <!-- Etichette -->
+                        <text x="395" y="230" fill="#333" font-size="14">x = 2</text>
+                        <text x="420" y="210" fill="#ff4500" font-size="12">asintoto</text>
+                    </svg>
+                    
+                    <div class="graph-question">
+                        <p><strong>Domanda 1:</strong> Quanto vale lim<sub>x→2⁻</sub> f(x)? (da sinistra)</p>
+                        <div class="answer-space">Risposta: _____</div>
+                        
+                        <p><strong>Domanda 2:</strong> Quanto vale lim<sub>x→2⁺</sub> f(x)? (da destra)</p>
+                        <div class="answer-space">Risposta: _____</div>
+                        
+                        <p><strong>Domanda 3:</strong> Esiste lim<sub>x→2</sub> f(x)?</p>
+                        <div class="answer-space">Risposta: _____ (Perché?)</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="group-work">
+                <h3>👥 LAVORO DI GRUPPO - Fase 2 (25 minuti)</h3>
+                <div class="timer-display">⏱️ Tempo: 25 minuti</div>
+                
+                <p style="text-align: center; margin: 20px 0;">
+                    <strong>Il Dr. Vector ha inviato 4 grafici misteriosi ai vostri terminali. 
+                    Ogni gruppo deve decodificare UN grafico e presentarlo alla classe.</strong>
+                </p>
+                
+                <div class="group-grid">
+                    <div class="group-card">
+                        <h4>🔴 GRUPPO ROSSO</h4>
+                        <p><strong>Grafico:</strong> Funzione con salto (discontinuità)</p>
+                        <p><strong>Compito:</strong> Disegnare il grafico e calcolare:</p>
+                        <ul style="margin-left: 20px; margin-top: 10px;">
+                            <li>lim<sub>x→c⁻</sub> f(x)</li>
+                            <li>lim<sub>x→c⁺</sub> f(x)</li>
+                            <li>lim<sub>x→c</sub> f(x) (esiste?)</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="group-card">
+                        <h4>🔵 GRUPPO BLU</h4>
+                        <p><strong>Grafico:</strong> Funzione con asintoto orizzontale</p>
+                        <p><strong>Compito:</strong> Disegnare e calcolare:</p>
+                        <ul style="margin-left: 20px; margin-top: 10px;">
+                            <li>lim<sub>x→+∞</sub> f(x)</li>
+                            <li>lim<sub>x→-∞</sub> f(x)</li>
+                            <li>Identificare l'asintoto orizzontale</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="group-card">
+                        <h4>🟢 GRUPPO VERDE</h4>
+                        <p><strong>Grafico:</strong> Funzione con punto isolato</p>
+                        <p><strong>Compito:</strong> Analizzare una funzione dove f(c) esiste ma è diversa dal limite</p>
+                        <ul style="margin-left: 20px; margin-top: 10px;">
+                            <li>lim<sub>x→c</sub> f(x)</li>
+                            <li>f(c)</li>
+                            <li>Confronto e spiegazione</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="group-card">
+                        <h4>🟡 GRUPPO GIALLO</h4>
+                        <p><strong>Grafico:</strong> Funzione con due asintoti</p>
+                        <p><strong>Compito:</strong> Analizzare una funzione con asintoto verticale e orizzontale</p>
+                        <ul style="margin-left: 20px; margin-top: 10px;">
+                            <li>Identificare entrambi gli asintoti</li>
+                            <li>Calcolare i limiti corrispondenti</li>
+                            <li>Spiegare il significato fisico</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="hint-box">
+                    <strong>Materiali da preparare:</strong> Foglio A3, pennarelli colorati, righello. 
+                    Un membro del gruppo presenterà alla classe usando il grafico disegnato.
+                </div>
+            </div>
+            
+            <div class="checklist">
+                <h3>✅ Obiettivi Scheda 2</h3>
+                <label><input type="checkbox"> Riconoscere graficamente quando un limite esiste</label>
+                <label><input type="checkbox"> Distinguere tra limite destro e sinistro</label>
+                <label><input type="checkbox"> Identificare asintoti verticali e orizzontali</label>
+                <label><input type="checkbox"> Compreso che il limite può esistere anche se f(c) non esiste</label>
+            </div>
+        </div>
+        
+        <!-- SCHEDA 3: DEFINIZIONI -->
+        <div id="scheda3" class="tab-content">
+            <div class="section-header">
+                <h2>📐 SCHEDA 3: DEFINIZIONI FORMALI</h2>
+                <p>Dalla intuizione alla precisione matematica</p>
+            </div>
+            
+            <div class="mission-box">
+                <h3>Il Protocollo di Precisione</h3>
+                <p>
+                    <em>"Ora che avete l'intuizione,"</em> dice il Dr. Vector, <em>"dobbiamo formalizzare. 
+                    Technowave richiede precisione assoluta. Non possiamo dire 'si avvicina' - dobbiamo definire 
+                    <strong>QUANTO</strong> si avvicina."</em>
+                </p>
+            </div>
+            
+            <div class="definition-box">
+                <h3>📌 DEFINIZIONE 1: Limite finito per x→x₀</h3>
+                <p style="font-size: 1.1rem; margin-bottom: 20px;">
+                    <strong>Versione intuitiva:</strong> Il limite di f(x) per x che tende a x₀ è L se possiamo 
+                    rendere f(x) <em>vicino quanto vogliamo</em> a L, purché prendiamo x <em>sufficientemente vicino</em> a x₀.
+                </p>
+                
+                <div class="formal-def">
+                    <p style="color: #9370db; font-weight: bold; margin-bottom: 10px;">DEFINIZIONE FORMALE (ε-δ):</p>
+                    <p style="font-size: 1.1rem;">
+                        lim<sub>x→x₀</sub> f(x) = L
+                    </p>
+                    <p style="margin-top: 15px;">
+                        significa che: per ogni ε > 0 (epsilon, quanto vogliamo essere vicini a L), 
+                        esiste δ > 0 (delta, quanto dobbiamo essere vicini a x₀) tale che:
+                    </p>
+                    <p style="text-align: center; font-size: 1.2rem; margin: 20px 0; color: #ffd700;">
+                        se 0 < |x - x₀| < δ  allora  |f(x) - L| < ε
+                    </p>
+                </div>
+                
+                <div class="hint-box">
+                    <strong>Traduzione pratica:</strong><br>
+                    • ε rappresenta la "tolleranza" che vogliamo su f(x)<br>
+                    • δ è quanto vicini dobbiamo stare a x₀ per rispettare quella tolleranza<br>
+                    • Il limite esiste se possiamo SEMPRE trovare un δ adatto, per OGNI ε che qualcuno ci propone
+                </div>
+            </div>
+            
+            <div class="definition-box">
+                <h3>📌 DEFINIZIONE 2: Limiti infiniti</h3>
+                <p style="font-size: 1.1rem; margin-bottom: 20px;">
+                    Quando la funzione "esplode" o "crolla" avvicinandosi a un punto:
+                </p>
+                
+                <div class="formal-def">
+                    <p style="color: #9370db; font-weight: bold;">lim<sub>x→x₀</sub> f(x) = +∞</p>
+                    <p style="margin-top: 10px;">
+                        significa che f(x) cresce oltre ogni limite avvicinandosi a x₀. 
+                        Formalmente: per ogni M > 0, esiste δ > 0 tale che se 0 < |x - x₀| < δ allora f(x) > M
+                    </p>
+                </div>
+                
+                <div class="formal-def" style="margin-top: 15px;">
+                    <p style="color: #9370db; font-weight: bold;">lim<sub>x→x₀</sub> f(x) = -∞</p>
+                    <p style="margin-top: 10px;">
+                        significa che f(x) decresce oltre ogni limite. Formalmente: per ogni M < 0, 
+                        esiste δ > 0 tale che se 0 < |x - x₀| < δ allora f(x) < M
+                    </p>
+                </div>
+            </div>
+            
+            <div class="definition-box">
+                <h3>📌 DEFINIZIONE 3: Limiti all'infinito</h3>
+                <p style="font-size: 1.1rem; margin-bottom: 20px;">
+                    Quando x tende a +∞ o -∞:
+                </p>
+                
+                <div class="formal-def">
+                    <p style="color: #9370db; font-weight: bold;">lim<sub>x→+∞</sub> f(x) = L</p>
+                    <p style="margin-top: 10px;">
+                        significa che f(x) tende a L quando x diventa sempre più grande. 
+                        Formalmente: per ogni ε > 0, esiste M > 0 tale che se x > M allora |f(x) - L| < ε
+                    </p>
+                </div>
+            </div>
+            
+            <div class="definition-box">
+                <h3>📌 DEFINIZIONE 4: Limiti destro e sinistro</h3>
+                <div class="formal-def">
+                    <p style="color: #9370db; font-weight: bold;">Limite destro:</p>
+                    <p>lim<sub>x→x₀⁺</sub> f(x) = L  (x si avvicina da valori maggiori di x₀)</p>
+                </div>
+                
+                <div class="formal-def" style="margin-top: 15px;">
+                    <p style="color: #9370db; font-weight: bold;">Limite sinistro:</p>
+                    <p>lim<sub>x→x₀⁻</sub> f(x) = L  (x si avvicina da valori minori di x₀)</p>
+                </div>
+                
+                <div class="hint-box" style="margin-top: 20px;">
+                    <strong>TEOREMA FONDAMENTALE:</strong><br>
+                    Il limite lim<sub>x→x₀</sub> f(x) esiste se e solo se:
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li>Esistono sia il limite destro che il limite sinistro</li>
+                        <li>I due limiti sono UGUALI</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="exercise-box">
+                <h4>🎯 ESERCIZI DI COMPRENSIONE</h4>
+                
+                <p><strong>Esercizio 1:</strong> Per la funzione f(x) = 1/x, determina:</p>
+                <div class="answer-space">
+                    a) lim<sub>x→0⁺</sub> f(x) = _____<br>
+                    b) lim<sub>x→0⁻</sub> f(x) = _____<br>
+                    c) lim<sub>x→0</sub> f(x) = _____ (esiste?)<br>
+                    d) lim<sub>x→+∞</sub> f(x) = _____
+                </div>
+                
+                <p style="margin-top: 20px;"><strong>Esercizio 2:</strong> Vero o Falso?</p>
+                <div class="answer-space">
+                    a) Se lim<sub>x→x₀</sub> f(x) = L, allora f(x₀) = L  [ V / F ]<br>
+                    b) Se f(x₀) non esiste, allora il limite non può esistere  [ V / F ]<br>
+                    c) Un asintoto verticale indica un limite infinito  [ V / F ]<br>
+                    d) Un asintoto orizzontale indica un limite finito all'infinito  [ V / F ]
+                </div>
+            </div>
+            
+            <div class="checklist">
+                <h3>✅ Obiettivi Scheda 3</h3>
+                <label><input type="checkbox"> Compresa la definizione ε-δ (almeno intuitivamente)</label>
+                <label><input type="checkbox"> Distinti i vari tipi di limite (finito, infinito, all'infinito)</label>
+                <label><input type="checkbox"> Compreso quando un limite esiste</label>
+                <label><input type="checkbox"> Compresa la relazione tra limiti destro/sinistro e limite</label>
+            </div>
+        </div>
+        
+        <!-- SCHEDA 4: FORME INDETERMINATE -->
+        <div id="scheda4" class="tab-content">
+            <div class="section-header">
+                <h2>🔧 SCHEDA 4: FORME INDETERMINATE</h2>
+                <p>Quando il calcolo diretto non funziona</p>
+            </div>
+            
+            <div class="mission-box">
+                <h3>⚠️ ALLERTA: Situazioni Critiche</h3>
+                <p>
+                    Il sistema di Technowave ha individuato situazioni in cui la <strong>sostituzione diretta</strong> 
+                    non funziona. Questi sono i casi più pericolosi - ma anche i più interessanti!
+                </p>
+            </div>
+            
+            <div class="definition-box">
+                <h3>❓ LE 7 FORME INDETERMINATE</h3>
+                <p style="margin-bottom: 20px;">
+                    Quando calcoliamo un limite sostituendo direttamente e otteniamo una di queste forme, 
+                    <strong>NON possiamo concludere nulla</strong> - dobbiamo usare tecniche speciali:
+                </p>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                    <div style="background: rgba(255,69,96,0.2); padding: 15px; border-radius: 10px; text-align: center;">
+                        <h4 style="color: #e94560; font-size: 2rem;">0/0</h4>
+                        <p style="font-size: 0.9rem;">La più comune</p>
+                    </div>
+                    <div style="background: rgba(255,69,96,0.2); padding: 15px; border-radius: 10px; text-align: center;">
+                        <h4 style="color: #e94560; font-size: 2rem;">∞/∞</h4>
+                        <p style="font-size: 0.9rem;">Rapporto di infiniti</p>
+                    </div>
+                    <div style="background: rgba(255,69,96,0.2); padding: 15px; border-radius: 10px; text-align: center;">
+                        <h4 style="color: #e94560; font-size: 2rem;">0 · ∞</h4>
+                        <p style="font-size: 0.9rem;">Prodotto indeterminato</p>
+                    </div>
+                    <div style="background: rgba(255,69,96,0.2); padding: 15px; border-radius: 10px; text-align: center;">
+                        <h4 style="color: #e94560; font-size: 2rem;">∞ - ∞</h4>
+                        <p style="font-size: 0.9rem;">Differenza di infiniti</p>
+                    </div>
+                    <div style="background: rgba(255,69,96,0.2); padding: 15px; border-radius: 10px; text-align: center;">
+                        <h4 style="color: #e94560; font-size: 2rem;">1^∞</h4>
+                        <p style="font-size: 0.9rem;">Potenza indeterminata</p>
+                    </div>
+                    <div style="background: rgba(255,69,96,0.2); padding: 15px; border-radius: 10px; text-align: center;">
+                        <h4 style="color: #e94560; font-size: 2rem;">0^0</h4>
+                        <p style="font-size: 0.9rem;">Potenza indeterminata</p>
+                    </div>
+                    <div style="background: rgba(255,69,96,0.2); padding: 15px; border-radius: 10px; text-align: center;">
+                        <h4 style="color: #e94560; font-size: 2rem;">∞^0</h4>
+                        <p style="font-size: 0.9rem;">Potenza indeterminata</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="exercise-box">
+                <h4>🔍 INVESTIGAZIONE: Perché sono indeterminate?</h4>
+                <p>Consideriamo alcuni esempi per capire perché <strong>0/0</strong> è indeterminato:</p>
+                
+                <div class="answer-space">
+                    <p><strong>Caso A:</strong> lim<sub>x→0</sub> (2x/x) = lim<sub>x→0</sub> 2 = <strong>2</strong></p>
+                    <p style="margin-top: 10px;"><strong>Caso B:</strong> lim<sub>x→0</sub> (x²/x) = lim<sub>x→0</sub> x = <strong>0</strong></p>
+                    <p style="margin-top: 10px;"><strong>Caso C:</strong> lim<sub>x→0</sub> (x/x²) = lim<sub>x→0</sub> (1/x) = <strong>∞</strong></p>
+                    <p style="margin-top: 15px; color: #ffd700;">
+                        ➜ Tutti e tre danno 0/0 se sostituiamo direttamente, ma i risultati sono DIVERSI!<br>
+                        Ecco perché è "indeterminata" - non possiamo decidere senza ulteriori analisi.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="group-work">
+                <h3>👥 LAVORO DI GRUPPO - Fase 3 (20 minuti)</h3>
+                <div class="timer-display">⏱️ Tempo: 20 minuti</div>
+                
+                <p style="text-align: center; margin: 20px 0;">
+                    <strong>Ogni gruppo riceve una forma indeterminata da esplorare con esempi concreti</strong>
+                </p>
+                
+                <div class="group-grid">
+                    <div class="group-card">
+                        <h4>🔴 GRUPPO ROSSO - Forma 0/0</h4>
+                        <p><strong>Esplorate questi limiti:</strong></p>
+                        <ul style="margin-left: 20px;">
+                            <li>lim<sub>x→1</sub> (x²-1)/(x-1)</li>
+                            <li>lim<sub>x→2</sub> (x²-4)/(x-2)</li>
+                            <li>lim<sub>x→3</sub> (x²-9)/(x²-3x)</li>
+                        </ul>
+                        <p style="margin-top: 10px;"><strong>Obiettivo:</strong> Trovare un pattern di risoluzione</p>
+                    </div>
+                    
+                    <div class="group-card">
+                        <h4>🔵 GRUPPO BLU - Forma ∞/∞</h4>
+                        <p><strong>Esplorate questi limiti:</strong></p>
+                        <ul style="margin-left: 20px;">
+                            <li>lim<sub>x→∞</sub> (2x+1)/(x+3)</li>
+                            <li>lim<sub>x→∞</sub> (3x²+2x)/(x²-1)</li>
+                            <li>lim<sub>x→∞</sub> (x³)/(x²+1)</li>
+                        </ul>
+                        <p style="margin-top: 10px;"><strong>Obiettivo:</strong> Confrontare i "pesi" di numeratore e denominatore</p>
+                    </div>
+                    
+                    <div class="group-card">
+                        <h4>🟢 GRUPPO VERDE - Forma ∞ - ∞</h4>
+                        <p><strong>Esplorate questi limiti:</strong></p>
+                        <ul style="margin-left: 20px;">
+                            <li>lim<sub>x→∞</sub> (√(x²+1) - x)</li>
+                            <li>lim<sub>x→∞</sub> (√(x²+x) - x)</li>
+                        </ul>
+                        <p style="margin-top: 10px;"><strong>Suggerimento:</strong> Provate a razionalizzare!</p>
+                    </div>
+                    
+                    <div class="group-card">
+                        <h4>🟡 GRUPPO GIALLO - Forma 0 · ∞</h4>
+                        <p><strong>Esplorate questi limiti:</strong></p>
+                        <ul style="margin-left: 20px;">
+                            <li>lim<sub>x→0</sub> x · (1/x²)</li>
+                            <li>lim<sub>x→∞</sub> (1/x) · x²</li>
+                        </ul>
+                        <p style="margin-top: 10px;"><strong>Suggerimento:</strong> Trasformate in forma 0/0 o ∞/∞</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="hint-box">
+                <strong>💡 Strategia generale:</strong><br>
+                • Prima verificate che sia effettivamente una forma indeterminata<br>
+                • Poi applicate le tecniche che vedremo nella prossima scheda<br>
+                • Se ottenete un risultato, verificate che abbia senso!
+            </div>
+            
+            <div class="checklist">
+                <h3>✅ Obiettivi Scheda 4</h3>
+                <label><input type="checkbox"> Riconoscere le 7 forme indeterminate</label>
+                <label><input type="checkbox"> Compreso perché sono "indeterminate"</label>
+                <label><input type="checkbox"> Verificato con esempi che danno risultati diversi</label>
+                <label><input type="checkbox"> Pronti per imparare le tecniche di risoluzione</label>
+            </div>
+        </div>
+        
+        <!-- SCHEDA 5: TECNICHE DI CALCOLO -->
+        <div id="scheda5" class="tab-content">
+            <div class="section-header">
+                <h2>⚡ SCHEDA 5: TECNICHE DI RISOLUZIONE</h2>
+                <p>Gli strumenti per risolvere le forme indeterminate</p>
+            </div>
+            
+            <div class="mission-box">
+                <h3>🛠️ L'Arsenale Matematico</h3>
+                <p>
+                    Il Dr. Vector vi presenta gli strumenti essenziali per affrontare i limiti. 
+                    <strong>Senza le derivate</strong> (quelle arriveranno dopo!), abbiamo comunque 
+                    tecniche potenti a disposizione.
+                </p>
+            </div>
+            
+            <!-- TECNICA 1 -->
+            <div class="technique-card">
+                <h3>🔧 TECNICA 1: Scomposizione e Semplificazione (0/0)</h3>
+                <p>Quando abbiamo 0/0, spesso possiamo scomporre e semplificare i fattori comuni.</p>
+                
+                <div class="technique-example">
+                    <p><strong>ESEMPIO:</strong></p>
+                    <p>lim<sub>x→2</sub> (x² - 4)/(x - 2)</p>
+                    <p style="margin-top: 10px; color: #ffd700;">↓ Scomposizione</p>
+                    <p>= lim<sub>x→2</sub> [(x-2)(x+2)]/(x-2)</p>
+                    <p style="margin-top: 10px; color: #ffd700;">↓ Semplificazione</p>
+                    <p>= lim<sub>x→2</sub> (x+2)</p>
+                    <p style="margin-top: 10px; color: #ffd700;">↓ Sostituzione</p>
+                    <p>= 2 + 2 = <strong style="color: #00ff88;">4</strong></p>
+                </div>
+                
+                <div class="exercise-box" style="margin-top: 20px;">
+                    <h4>Prova tu:</h4>
+                    <div class="answer-space">
+                        <p>1) lim<sub>x→3</sub> (x² - 9)/(x - 3) = _____</p>
+                        <p>2) lim<sub>x→-1</sub> (x² + 3x + 2)/(x + 1) = _____</p>
+                        <p>3) lim<sub>x→2</sub> (x³ - 8)/(x - 2) = _____ (usa Ruffini!)</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- TECNICA 2 -->
+            <div class="technique-card">
+                <h3>🔧 TECNICA 2: Raccoglimento (∞/∞)</h3>
+                <p>Per limiti all'infinito, raccogliamo il termine di grado massimo.</p>
+                
+                <div class="technique-example">
+                    <p><strong>ESEMPIO:</strong></p>
+                    <p>lim<sub>x→∞</sub> (3x² + 2x - 1)/(2x² - x + 5)</p>
+                    <p style="margin-top: 10px; color: #ffd700;">↓ Raccogliamo x² al numeratore e denominatore</p>
+                    <p>= lim<sub>x→∞</sub> [x²(3 + 2/x - 1/x²)] / [x²(2 - 1/x + 5/x²)]</p>
+                    <p style="margin-top: 10px; color: #ffd700;">↓ Semplifichiamo x²</p>
+                    <p>= lim<sub>x→∞</sub> (3 + 2/x - 1/x²)/(2 - 1/x + 5/x²)</p>
+                    <p style="margin-top: 10px; color: #ffd700;">↓ I termini con x al denominatore tendono a 0</p>
+                    <p>= 3/2 = <strong style="color: #00ff88;">1.5</strong></p>
+                </div>
+                
+                <div class="hint-box">
+                    <strong>REGOLA PRATICA per polinomi:</strong><br>
+                    • Se i gradi sono uguali → limite = rapporto dei coefficienti direttivi<br>
+                    • Se il grado al numeratore è maggiore → limite = ±∞<br>
+                    • Se il grado al denominatore è maggiore → limite = 0
+                </div>
+                
+                <div class="exercise-box" style="margin-top: 20px;">
+                    <h4>Prova tu:</h4>
+                    <div class="answer-space">
+                        <p>1) lim<sub>x→∞</sub> (5x² + 3)/(2x² - 1) = _____</p>
+                        <p>2) lim<sub>x→∞</sub> (x³ + 1)/(x² + x) = _____</p>
+                        <p>3) lim<sub>x→∞</sub> (2x + 5)/(x² - 3) = _____</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- TECNICA 3 -->
+            <div class="technique-card">
+                <h3>🔧 TECNICA 3: Razionalizzazione (∞ - ∞)</h3>
+                <p>Quando abbiamo differenze di radicali, moltiplichiamo per l'espressione coniugata.</p>
+                
+                <div class="technique-example">
+                    <p><strong>ESEMPIO:</strong></p>
+                    <p>lim<sub>x→∞</sub> (√(x² + x) - x)</p>
+                    <p style="margin-top: 10px; color: #ffd700;">↓ Moltiplichiamo per il coniugato</p>
+                    <p>= lim<sub>x→∞</sub> [(√(x² + x) - x) · (√(x² + x) + x)] / (√(x² + x) + x)</p>
+                    <p style="margin-top: 10px; color: #ffd700;">↓ Differenza di quadrati</p>
+                    <p>= lim<sub>x→∞</sub> (x² + x - x²) / (√(x² + x) + x)</p>
+                    <p>= lim<sub>x→∞</sub> x / (√(x² + x) + x)</p>
+                    <p style="margin-top: 10px; color: #ffd700;">↓ Dividiamo tutto per x</p>
+                    <p>= lim<sub>x→∞</sub> 1 / (√(1 + 1/x) + 1)</p>
+                    <p>= 1/(1+1) = <strong style="color: #00ff88;">1/2</strong></p>
+                </div>
+                
+                <div class="exercise-box" style="margin-top: 20px;">
+                    <h4>Prova tu:</h4>
+                    <div class="answer-space">
+                        <p>1) lim<sub>x→∞</sub> (√(x² + 4) - x) = _____</p>
+                        <p>2) lim<sub>x→∞</sub> (√(4x² + 1) - 2x) = _____</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- TECNICA 4 -->
+            <div class="technique-card">
+                <h3>🔧 TECNICA 4: Limiti Notevoli</h3>
+                <p>Alcuni limiti fondamentali da memorizzare:</p>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; margin-top: 20px;">
+                    <div class="technique-example">
+                        <p style="color: #ffd700; font-weight: bold;">Limite del seno:</p>
+                        <p>lim<sub>x→0</sub> (sin x)/x = <strong>1</strong></p>
+                    </div>
+                    
+                    <div class="technique-example">
+                        <p style="color: #ffd700; font-weight: bold;">Variante:</p>
+                        <p>lim<sub>x→0</sub> (1 - cos x)/x² = <strong>1/2</strong></p>
+                    </div>
+                    
+                    <div class="technique-example">
+                        <p style="color: #ffd700; font-weight: bold;">Numero di Nepero:</p>
+                        <p>lim<sub>x→∞</sub> (1 + 1/x)^x = <strong>e</strong></p>
+                    </div>
+                    
+                    <div class="technique-example">
+                        <p style="color: #ffd700; font-weight: bold;">Variante:</p>
+                        <p>lim<sub>x→0</sub> (1 + x)^(1/x) = <strong>e</strong></p>
+                    </div>
+                </div>
+                
+                <div class="exercise-box" style="margin-top: 20px;">
+                    <h4>Prova tu (usando i limiti notevoli):</h4>
+                    <div class="answer-space">
+                        <p>1) lim<sub>x→0</sub> (sin 3x)/(3x) = _____</p>
+                        <p>2) lim<sub>x→0</sub> (sin 2x)/x = _____</p>
+                        <p>3) lim<sub>x→∞</sub> (1 + 2/x)^x = _____ [Suggerimento: riscrivere opportunamente]</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="group-work">
+                <h3>👥 LAVORO DI GRUPPO - Fase 4 (30 minuti)</h3>
+                <div class="timer-display">⏱️ Tempo: 30 minuti</div>
+                
+                <p style="text-align: center; margin: 20px 0;">
+                    <strong>SFIDA FINALE: Ogni gruppo riceve un pacchetto di 5 limiti misti. 
+                    Dovete decidere quale tecnica usare per ciascuno e risolverli tutti!</strong>
+                </p>
+                
+                <div class="group-grid">
+                    <div class="group-card">
+                        <h4>🔴 GRUPPO ROSSO - Mix Level 1</h4>
+                        <ol style="margin-left: 20px;">
+                            <li>lim<sub>x→1</sub> (x² - 1)/(x - 1)</li>
+                            <li>lim<sub>x→∞</sub> (2x + 1)/(x - 3)</li>
+                            <li>lim<sub>x→0</sub> (sin 5x)/x</li>
+                            <li>lim<sub>x→∞</sub> (√(x² + 1) - x)</li>
+                            <li>lim<sub>x→∞</sub> (x³ + 2)/(2x³ - 1)</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="group-card">
+                        <h4>🔵 GRUPPO BLU - Mix Level 1</h4>
+                        <ol style="margin-left: 20px;">
+                            <li>lim<sub>x→2</sub> (x² - 4)/(x² - 2x)</li>
+                            <li>lim<sub>x→∞</sub> (3x² - x)/(x² + 5)</li>
+                            <li>lim<sub>x→0</sub> (1 - cos x)/x²</li>
+                            <li>lim<sub>x→∞</sub> (√(4x² + x) - 2x)</li>
+                            <li>lim<sub>x→∞</sub> (2x + 1)/(x² - 1)</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="group-card">
+                        <h4>🟢 GRUPPO VERDE - Mix Level 2</h4>
+                        <ol style="margin-left: 20px;">
+                            <li>lim<sub>x→-1</sub> (x³ + 1)/(x + 1)</li>
+                            <li>lim<sub>x→∞</sub> (x³ - 2x)/(2x² + 1)</li>
+                            <li>lim<sub>x→0</sub> (sin 3x)/(sin 2x)</li>
+                            <li>lim<sub>x→∞</sub> (√(x² + 2x + 1) - x)</li>
+                            <li>lim<sub>x→∞</sub> (1 + 3/x)^(x/3)</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="group-card">
+                        <h4>🟡 GRUPPO GIALLO - Mix Level 2</h4>
+                        <ol style="margin-left: 20px;">
+                            <li>lim<sub>x→0</sub> (x² - 4x)/(x)</li>
+                            <li>lim<sub>x→∞</sub> (5x³ + x²)/(x³ - 1)</li>
+                            <li>lim<sub>x→0</sub> x · (1/sin x)</li>
+                            <li>lim<sub>x→∞</sub> (√(9x² + 1) - 3x)</li>
+                            <li>lim<sub>x→∞</sub> [(x+1)/x]^x</li>
+                        </ol>
+                    </div>
+                </div>
+                
+                <div class="hint-box" style="margin-top: 20px;">
+                    <strong>Strategia suggerita:</strong><br>
+                    1. Per ogni limite, identificate prima la forma (determinata o indeterminata)<br>
+                    2. Se indeterminata, decidete quale tecnica usare<br>
+                    3. Applicate la tecnica passo per passo<br>
+                    4. Verificate il risultato (ha senso?)<br>
+                    5. Un membro del gruppo scrive la soluzione completa da presentare
+                </div>
+            </div>
+            
+            <div class="checklist">
+                <h3>✅ Obiettivi Scheda 5</h3>
+                <label><input type="checkbox"> Padronanza della scomposizione (0/0)</label>
+                <label><input type="checkbox"> Padronanza del raccoglimento (∞/∞)</label>
+                <label><input type="checkbox"> Padronanza della razionalizzazione (∞ - ∞)</label>
+                <label><input type="checkbox"> Memorizzati i limiti notevoli principali</label>
+                <label><input type="checkbox"> Saper scegliere la tecnica appropriata</label>
+            </div>
+        </div>
+        
+        <!-- SCHEDA 6: MISSIONE FINALE -->
+        <div id="scheda6" class="tab-content">
+            <div class="section-header">
+                <h2>🎯 SCHEDA 6: MISSIONE FINALE</h2>
+                <p>La Risoluzione della Crisi di Technowave</p>
+            </div>
+            
+            <div class="story-intro" style="background: linear-gradient(135deg, rgba(233,69,96,0.3), rgba(83,52,131,0.3));">
+                <h2>🚨 SITUAZIONE CRITICA FINALE</h2>
+                <p>
+                    <em>Il Dr. Vector appare sullo schermo principale con espressione seria:</em>
+                </p>
+                <p>
+                    <em>"Team, abbiamo ricevuto un messaggio di emergenza dalla Stazione Orbitale Gamma. 
+                    Il loro sistema di navigazione quantistica sta per collassare. Hanno rilevato 
+                    <strong>quattro anomalie critiche</strong> nei loro algoritmi di calcolo, e solo voi 
+                    avete le competenze per risolverle."</em>
+                </p>
+                <p>
+                    <em>"Ogni gruppo dovrà affrontare UNA anomalia. La stazione ha solo 
+                    <strong>45 minuti di autonomia</strong> prima del collasso totale. Il futuro di 
+                    Technowave dipende da voi!"</em>
+                </p>
+            </div>
+            
+            <div class="timer-display" style="font-size: 2rem; animation: pulse 2s infinite;">
+                ⏱️ COUNTDOWN: 45 MINUTI
+            </div>
+            
+            <div class="group-work">
+                <h3>🎯 MISSIONI FINALI DEI GRUPPI</h3>
+                
+                <div class="group-card" style="margin-bottom: 30px; border: 3px solid #ff0000;">
+                    <h4>🔴 GRUPPO ROSSO - ANOMALIA ALFA</h4>
+                    <div style="background: rgba(255,0,0,0.1); padding: 20px; border-radius: 10px; margin-top: 15px;">
+                        <p style="color: #ffd700; font-weight: bold;">CODICE CRITICO ALFA:</p>
+                        <p style="font-size: 1.2rem; margin: 15px 0;">
+                            Il sistema di posizionamento usa la funzione:<br>
+                            <strong style="display: block; text-align: center; font-size: 1.4rem; margin: 15px 0;">
+                                f(x) = (√(x² + 4x + 4) - x - 2)/(x² - 4)
+                            </strong>
+                        </p>
+                        <p><strong>OBIETTIVI:</strong></p>
+                        <ol style="margin-left: 20px; margin-top: 10px;">
+                            <li>Calcolare lim<sub>x→2</sub> f(x)</li>
+                            <li>Determinare se la funzione è continua in x = 2</li>
+                            <li>Disegnare un grafico qualitativo vicino a x = 2</li>
+                            <li>Proporre una modifica al codice per eliminare la discontinuità</li>
+                        </ol>
+                        <p style="margin-top: 15px; color: #ff6b6b;"><strong>Suggerimento:</strong> Razionalizzate prima, poi scomponete!</p>
+                    </div>
+                </div>
+                
+                <div class="group-card" style="margin-bottom: 30px; border: 3px solid #0000ff;">
+                    <h4>🔵 GRUPPO BLU - ANOMALIA BETA</h4>
+                    <div style="background: rgba(0,0,255,0.1); padding: 20px; border-radius: 10px; margin-top: 15px;">
+                        <p style="color: #ffd700; font-weight: bold;">CODICE CRITICO BETA:</p>
+                        <p style="font-size: 1.2rem; margin: 15px 0;">
+                            Il controllo velocità usa:<br>
+                            <strong style="display: block; text-align: center; font-size: 1.4rem; margin: 15px 0;">
+                                v(t) = (3t³ + 2t² - 5t)/(2t³ - t² + 1) per t → ∞
+                            </strong>
+                        </p>
+                        <p><strong>OBIETTIVI:</strong></p>
+                        <ol style="margin-left: 20px; margin-top: 10px;">
+                            <li>Calcolare lim<sub>t→∞</sub> v(t)</li>
+                            <li>Interpretare il risultato: verso quale velocità tende la nave?</li>
+                            <li>Trovare dopo quanto tempo v(t) differisce da questo limite per meno di 0.01</li>
+                            <li>Determinare se esiste un asintoto orizzontale e scriverne l'equazione</li>
+                        </ol>
+                        <p style="margin-top: 15px; color: #6b9eff;"><strong>Suggerimento:</strong> Confrontate i gradi!</p>
+                    </div>
+                </div>
+                
+                <div class="group-card" style="margin-bottom: 30px; border: 3px solid #00ff00;">
+                    <h4>🟢 GRUPPO VERDE - ANOMALIA GAMMA</h4>
+                    <div style="background: rgba(0,255,0,0.1); padding: 20px; border-radius: 10px; margin-top: 15px;">
+                        <p style="color: #ffd700; font-weight: bold;">CODICE CRITICO GAMMA:</p>
+                        <p style="font-size: 1.2rem; margin: 15px 0;">
+                            L'oscillatore quantistico ha segnale:<br>
+                            <strong style="display: block; text-align: center; font-size: 1.4rem; margin: 15px 0;">
+                                s(x) = x² · sin(1/x) per x → 0
+                            </strong>
+                        </p>
+                        <p><strong>OBIETTIVI:</strong></p>
+                        <ol style="margin-left: 20px; margin-top: 10px;">
+                            <li>Calcolare lim<sub>x→0</sub> s(x) usando il teorema del confronto:<br>
+                            <em style="font-size: 0.9rem;">Suggerimento: -1 ≤ sin(1/x) ≤ 1, quindi -x² ≤ x²sin(1/x) ≤ x²</em></li>
+                            <li>Verificare il risultato con una tabella di valori</li>
+                            <li>Disegnare un grafico approssimativo della funzione vicino a x = 0</li>
+                            <li>Spiegare perché il limite notevole lim<sub>t→0</sub> (sin t)/t = 1 non si può applicare direttamente</li>
+                        </ol>
+                        <p style="margin-top: 15px; color: #6bff6b;"><strong>Suggerimento:</strong> Pensate ai "sandwich"!</p>
+                    </div>
+                </div>
+                
+                <div class="group-card" style="margin-bottom: 30px; border: 3px solid #ffff00;">
+                    <h4>🟡 GRUPPO GIALLO - ANOMALIA DELTA</h4>
+                    <div style="background: rgba(255,255,0,0.1); padding: 20px; border-radius: 10px; margin-top: 15px;">
+                        <p style="color: #ffd700; font-weight: bold;">CODICE CRITICO DELTA:</p>
+                        <p style="font-size: 1.2rem; margin: 15px 0;">
+                            Il generatore di energia segue:<br>
+                            <strong style="display: block; text-align: center; font-size: 1.4rem; margin: 15px 0;">
+                                E(n) = (1 + 2/n)^(3n) per n → ∞
+                            </strong>
+                        </p>
+                        <p><strong>OBIETTIVI:</strong></p>
+                        <ol style="margin-left: 20px; margin-top: 10px;">
+                            <li>Calcolare lim<sub>n→∞</sub> E(n) usando il limite notevole e^k</li>
+                            <li>Riscrivere la funzione per far apparire la forma (1 + 1/m)^m</li>
+                            <li>Calcolare i valori numerici per n = 10, 100, 1000 per verificare</li>
+                            <li>Interpretare: verso quale valore di energia tende il sistema?</li>
+                        </ol>
+                        <p style="margin-top: 15px; color: #ffff6b;"><strong>Suggerimento:</strong> Fate comparire il numero e!</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mission-box" style="margin-top: 30px; border-color: #ffd700;">
+                <h3>📊 CRITERI DI VALUTAZIONE MISSIONE</h3>
+                <p style="margin-bottom: 15px;">Ogni gruppo verrà valutato su:</p>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                    <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px;">
+                        <h4 style="color: #00ff88;">Correttezza (40%)</h4>
+                        <p style="font-size: 0.9rem;">Risultato matematico corretto e procedimento valido</p>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px;">
+                        <h4 style="color: #00ff88;">Spiegazione (30%)</h4>
+                        <p style="font-size: 0.9rem;">Chiarezza nella presentazione e giustificazione dei passaggi</p>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px;">
+                        <h4 style="color: #00ff88;">Rappresentazione (20%)</h4>
+                        <p style="font-size: 0.9rem;">Grafici, tabelle e visualizzazioni</p>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px;">
+                        <h4 style="color: #00ff88;">Collaborazione (10%)</h4>
+                        <p style="font-size: 0.9rem;">Lavoro di squadra efficace</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="story-intro" style="margin-top: 30px;">
+                <h2>🎉 EPILOGO</h2>
+                <p>
+                    Dopo 45 minuti di intensa concentrazione, tutti i gruppi hanno risolto le loro anomalie. 
+                    Sullo schermo principale appare il Dr. Vector con un sorriso soddisfatto:
+                </p>
+                <p>
+                    <em>"Eccellente lavoro, team! La Stazione Gamma è salva grazie a voi. Avete dimostrato di 
+                    padroneggiare uno degli strumenti più potenti della matematica: il concetto di LIMITE."</em>
+                </p>
+                <p>
+                    <em>"Ricordate: oggi avete studiato il comportamento delle funzioni vicino ai punti critici. 
+                    Ma i limiti sono solo l'inizio. Tra poche settimane, quando affronteremo le DERIVATE, 
+                    scoprirete come i limiti siano la chiave per comprendere il cambiamento istantaneo. 
+                    E poi gli INTEGRALI, che useranno i limiti per calcolare aree e volumi."</em>
+                </p>
+                <p style="color: #ffd700; font-size: 1.2rem; text-align: center; margin-top: 20px;">
+                    <strong>Il vostro viaggio in Technowave continua...</strong>
+                </p>
+            </div>
+            
+            <div class="checklist">
+                <h3>✅ Obiettivi Finali dell'Episodio</h3>
+                <label><input type="checkbox"> Risolto un problema complesso usando i limiti</label>
+                <label><input type="checkbox"> Collaborato efficacemente nel gruppo</label>
+                <label><input type="checkbox"> Presentato la soluzione alla classe</label>
+                <label><input type="checkbox"> Compreso le applicazioni pratiche dei limiti</label>
+                <label><input type="checkbox"> Pronti per il prossimo episodio (DERIVATE!)</label>
+            </div>
+            
+            <div style="text-align: center; margin-top: 30px;">
+                <button class="action-button" onclick="window.print()">
+                    🖨️ STAMPA CERTIFICATO DI COMPLETAMENTO
+                </button>
+            </div>
+        </div>
+        
+    </div>
+    
+    <script>
+        // Funzione per cambiare scheda
+        function openTab(tabId) {
+            // Nascondi tutti i contenuti
+            const contents = document.getElementsByClassName('tab-content');
+            for (let content of contents) {
+                content.classList.remove('active');
+            }
+            
+            // Rimuovi 'active' da tutti i pulsanti
+            const buttons = document.getElementsByClassName('tab-button');
+            for (let button of buttons) {
+                button.classList.remove('active');
+            }
+            
+            // Mostra il contenuto selezionato
+            document.getElementById(tabId).classList.add('active');
+            
+            // Attiva il pulsante cliccato
+            event.target.closest('.tab-button').classList.add('active');
+            
+            // Scroll smooth all'inizio del contenuto
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        
+        // Animazione pulse per il timer
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes pulse {
+                0%, 100% { transform: scale(1); }
+                50% { transform: scale(1.05); }
+            }
+        `;
+        document.head.appendChild(style);
+        
+        // Salvataggio automatico delle checkbox in localStorage
+        document.addEventListener('DOMContentLoaded', function() {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            
+            checkboxes.forEach((checkbox, index) => {
+                const savedState = localStorage.getItem(`checkbox_${index}`);
+                if (savedState === 'true') {
+                    checkbox.checked = true;
+                }
+                
+                checkbox.addEventListener('change', function() {
+                    localStorage.setItem(`checkbox_${index}`, this.checked);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
