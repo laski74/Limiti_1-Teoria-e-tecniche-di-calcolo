@@ -1,0 +1,2037 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TECHNOWAVE - Missione 2, Episodio 1: Il Limite della Precisione</title>
+    
+    <!-- MathJax per le formule matematiche -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: #fff;
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* Animated Background Particles */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.5;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #e94560;
+            border-radius: 50%;
+            animation: float 20s infinite linear;
+        }
+        
+        @keyframes float {
+            from {
+                transform: translateY(100vh) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            to {
+                transform: translateY(-100vh) translateX(100px);
+                opacity: 0;
+            }
+        }
+        
+        .main-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* HEADER CON LOGO TECHNOWAVE */
+        .technowave-header {
+            background: linear-gradient(45deg, #e94560, #533483);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 15px 40px rgba(233, 69, 96, 0.4);
+            position: relative;
+            overflow: hidden;
+            animation: headerPulse 3s ease-in-out infinite;
+        }
+        
+        @keyframes headerPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+        
+        .technowave-header::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 10px,
+                rgba(255,255,255,0.05) 10px,
+                rgba(255,255,255,0.05) 20px
+            );
+            animation: slide 20s linear infinite;
+        }
+        
+        @keyframes slide {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+        
+        .technowave-header h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.5);
+            position: relative;
+            z-index: 1;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes glow {
+            from { text-shadow: 3px 3px 6px rgba(0,0,0,0.5), 0 0 20px rgba(233, 69, 96, 0.5); }
+            to { text-shadow: 3px 3px 6px rgba(0,0,0,0.5), 0 0 30px rgba(233, 69, 96, 0.8), 0 0 40px rgba(233, 69, 96, 0.6); }
+        }
+        
+        .technowave-header .episode-title {
+            font-size: 1.8rem;
+            color: #ffd700;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+            animation: slideInFromRight 1s ease-out;
+        }
+        
+        @keyframes slideInFromRight {
+            from {
+                transform: translateX(100px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        .technowave-header .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+            animation: fadeIn 2s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* STORY INTRO */
+        .story-intro {
+            background: rgba(255,255,255,0.05);
+            border-left: 5px solid #e94560;
+            padding: 30px;
+            margin-bottom: 30px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            animation: slideInFromLeft 1s ease-out;
+        }
+        
+        @keyframes slideInFromLeft {
+            from {
+                transform: translateX(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        .story-intro h2 {
+            color: #ffd700;
+            margin-bottom: 15px;
+            font-size: 1.8rem;
+        }
+        
+        .story-intro p {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+        
+        .story-intro .warning-box {
+            background: rgba(255, 69, 0, 0.2);
+            border: 2px solid #ff4500;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 10px;
+            text-align: center;
+            animation: warningPulse 1.5s ease-in-out infinite;
+        }
+        
+        @keyframes warningPulse {
+            0%, 100% { 
+                box-shadow: 0 0 20px rgba(255, 69, 0, 0.4);
+                transform: scale(1);
+            }
+            50% { 
+                box-shadow: 0 0 40px rgba(255, 69, 0, 0.8);
+                transform: scale(1.02);
+            }
+        }
+        
+        .story-intro .warning-box h3 {
+            color: #ff4500;
+            margin-bottom: 10px;
+        }
+        
+        /* CHARACTERS PANEL */
+        .characters-panel {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 30px 0;
+            padding: 20px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .character-card {
+            background: linear-gradient(135deg, #533483, #16213e);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            border: 2px solid rgba(255,255,255,0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            animation: cardFloat 3s ease-in-out infinite;
+            animation-delay: calc(var(--index) * 0.2s);
+        }
+        
+        @keyframes cardFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .character-card:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 10px 30px rgba(233, 69, 96, 0.4);
+            border-color: #e94560;
+            animation-play-state: paused;
+        }
+        
+        .character-card .emoji {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            animation: rotate 3s linear infinite;
+        }
+        
+        .character-card:hover .emoji {
+            animation: bounce 0.5s ease-in-out infinite;
+        }
+        
+        @keyframes rotate {
+            0%, 100% { transform: rotate(-5deg); }
+            50% { transform: rotate(5deg); }
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .character-card .name {
+            color: #ffd700;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .character-card .role {
+            font-size: 0.9rem;
+            color: #ff6b6b;
+        }
+        
+        /* TAB NAVIGATION */
+        .tab-navigation {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
+            background: rgba(255,255,255,0.05);
+            padding: 20px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .tab-button {
+            background: linear-gradient(135deg, #533483, #16213e);
+            color: white;
+            border: 2px solid transparent;
+            padding: 15px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .tab-button::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.3s, height 0.3s;
+        }
+        
+        .tab-button:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+        
+        .tab-button:hover {
+            border-color: #e94560;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(233, 69, 96, 0.4);
+        }
+        
+        .tab-button.active {
+            background: linear-gradient(135deg, #e94560, #ff6b6b);
+            border-color: #ffd700;
+            box-shadow: 0 5px 20px rgba(233, 69, 96, 0.6);
+            animation: tabPulse 1s ease-in-out infinite;
+        }
+        
+        @keyframes tabPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .tab-button span {
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* TAB CONTENT */
+        .tab-content {
+            display: none;
+            animation: fadeInUp 0.5s ease-in-out;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        @keyframes fadeInUp {
+            from { 
+                opacity: 0; 
+                transform: translateY(30px); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0); 
+            }
+        }
+        
+        /* THEORY BOXES */
+        .theory-box {
+            background: linear-gradient(135deg, rgba(83,52,131,0.3), rgba(22,33,62,0.3));
+            border: 2px solid #533483;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .theory-box::before {
+            content: "";
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #e94560, #533483, #3498db, #00ff88);
+            border-radius: 15px;
+            opacity: 0;
+            z-index: -1;
+            transition: opacity 0.3s ease;
+        }
+        
+        .theory-box:hover::before {
+            opacity: 1;
+            animation: borderRotate 4s linear infinite;
+        }
+        
+        @keyframes borderRotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .theory-box h3 {
+            color: #ffd700;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        
+        .theory-box h4 {
+            color: #ff6b6b;
+            margin: 20px 0 10px 0;
+            font-size: 1.2rem;
+        }
+        
+        /* FORMULA BOX */
+        .formula-box {
+            background: linear-gradient(135deg, #2c3e50, #3498db);
+            border: 3px solid #ffd700;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(52, 152, 219, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .formula-box::after {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent 40%, rgba(255,255,255,0.1) 50%, transparent 60%);
+            animation: shimmer 3s infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+        
+        .formula-box h3 {
+            color: #ffd700;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .formula-box .formula {
+            font-size: 1.5rem;
+            color: white;
+            background: rgba(0,0,0,0.3);
+            padding: 20px;
+            border-radius: 10px;
+            display: block;
+            margin: 15px 0;
+            overflow-x: auto;
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* TECHNIQUE CARDS */
+        .technique-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .technique-card {
+            background: linear-gradient(135deg, rgba(233,69,96,0.2), rgba(83,52,131,0.2));
+            border: 2px solid #e94560;
+            border-radius: 15px;
+            padding: 20px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .technique-card::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: radial-gradient(circle, rgba(233,69,96,0.3), transparent);
+            transform: translate(-50%, -50%);
+            transition: width 0.5s, height 0.5s;
+        }
+        
+        .technique-card:hover::before {
+            width: 300%;
+            height: 300%;
+        }
+        
+        .technique-card:hover {
+            transform: translateY(-5px) rotateX(5deg);
+            box-shadow: 0 10px 30px rgba(233, 69, 96, 0.5);
+        }
+        
+        .technique-card h4 {
+            color: #ffd700;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .technique-card p {
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* EXAMPLE BOX */
+        .example-box {
+            background: rgba(0,255,0,0.1);
+            border: 2px solid #00ff88;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            position: relative;
+            animation: exampleGlow 3s ease-in-out infinite;
+        }
+        
+        @keyframes exampleGlow {
+            0%, 100% { box-shadow: 0 0 10px rgba(0,255,136,0.3); }
+            50% { box-shadow: 0 0 20px rgba(0,255,136,0.6); }
+        }
+        
+        .example-box h4 {
+            color: #00ff88;
+            margin-bottom: 15px;
+        }
+        
+        .example-box .problem {
+            background: rgba(0,0,0,0.3);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .example-box .solution {
+            background: rgba(255,255,255,0.05);
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 3px solid #00ff88;
+        }
+        
+        /* COLLAPSIBLE SECTION */
+        .collapsible {
+            background: linear-gradient(135deg, #533483, #16213e);
+            color: white;
+            cursor: pointer;
+            padding: 18px;
+            width: 100%;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 1.1rem;
+            border-radius: 10px;
+            margin: 10px 0;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .collapsible::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 0;
+            background: linear-gradient(90deg, rgba(233,69,96,0.3), transparent);
+            transition: width 0.3s ease;
+        }
+        
+        .collapsible:hover::before {
+            width: 100%;
+        }
+        
+        .collapsible:after {
+            content: '▼';
+            color: #ffd700;
+            font-weight: bold;
+            float: right;
+            margin-left: 5px;
+            transition: transform 0.3s ease;
+        }
+        
+        .collapsible.active:after {
+            transform: rotate(180deg);
+        }
+        
+        .collapsible:hover {
+            background: linear-gradient(135deg, #e94560, #533483);
+            box-shadow: 0 5px 15px rgba(233, 69, 96, 0.4);
+            transform: translateX(5px);
+        }
+        
+        .collapsible-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s cubic-bezier(0, 1, 0, 1);
+            background-color: rgba(255,255,255,0.05);
+            border-radius: 0 0 10px 10px;
+            margin-top: -10px;
+        }
+        
+        .collapsible-content.show {
+            max-height: 3000px;
+            transition: max-height 1s ease-in-out;
+            animation: contentSlideDown 0.5s ease-out;
+        }
+        
+        @keyframes contentSlideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .collapsible-content-inner {
+            padding: 20px;
+        }
+        
+        /* CHECKLIST */
+        .checklist {
+            background: rgba(255,255,255,0.05);
+            border: 2px solid #ffd700;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .checklist::before {
+            content: "✓";
+            position: absolute;
+            top: -20px;
+            right: 20px;
+            font-size: 100px;
+            opacity: 0.05;
+            animation: checkRotate 10s linear infinite;
+        }
+        
+        @keyframes checkRotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .checklist h3 {
+            color: #ffd700;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+        
+        .checklist label {
+            display: block;
+            padding: 10px;
+            margin-bottom: 10px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .checklist label::before {
+            content: "";
+            position: absolute;
+            left: -100%;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0,255,136,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .checklist label:hover::before {
+            left: 100%;
+        }
+        
+        .checklist label:hover {
+            background: rgba(255,255,255,0.1);
+            transform: translateX(5px);
+        }
+        
+        .checklist input[type="checkbox"] {
+            margin-right: 10px;
+            width: 20px;
+            height: 20px;
+            vertical-align: middle;
+            cursor: pointer;
+        }
+        
+        .checklist input[type="checkbox"]:checked + span {
+            text-decoration: line-through;
+            opacity: 0.7;
+            color: #00ff88;
+        }
+        
+        /* MISSION BOX */
+        .mission-box {
+            background: linear-gradient(135deg, rgba(255,69,0,0.2), rgba(255,215,0,0.1));
+            border: 3px solid #ff4500;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 30px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .mission-box::before {
+            content: "⚠️";
+            position: absolute;
+            top: -20px;
+            right: 20px;
+            font-size: 4rem;
+            opacity: 0.1;
+            animation: warningRotate 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes warningRotate {
+            from { transform: rotate(-10deg); }
+            to { transform: rotate(10deg); }
+        }
+        
+        .mission-box h3 {
+            color: #ffd700;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        
+        .mission-timer {
+            background: rgba(255,0,0,0.2);
+            border: 2px solid #ff0000;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            margin: 20px 0;
+            font-size: 1.5rem;
+            color: #ffd700;
+            animation: timerPulse 1s infinite;
+        }
+        
+        @keyframes timerPulse {
+            0%, 100% { 
+                transform: scale(1);
+                box-shadow: 0 0 10px rgba(255,0,0,0.5);
+            }
+            50% { 
+                transform: scale(1.05);
+                box-shadow: 0 0 20px rgba(255,0,0,0.8);
+            }
+        }
+        
+        /* GROUP CARDS */
+        .group-card {
+            background: rgba(255,255,255,0.05);
+            border: 3px solid #333;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .group-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: left 0.8s ease;
+        }
+        
+        .group-card:hover::before {
+            left: 100%;
+        }
+        
+        .group-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 30px rgba(255,255,255,0.2);
+        }
+        
+        .group-card h4 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: #ffd700;
+        }
+        
+        .exercise-section {
+            background: rgba(0,0,0,0.2);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-left: 4px solid #00ff88;
+            animation: exerciseSlideIn 0.5s ease-out;
+        }
+        
+        @keyframes exerciseSlideIn {
+            from {
+                transform: translateX(-20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        .exercise-section h5 {
+            color: #00ff88;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+        
+        /* ACTION BUTTON */
+        .action-button {
+            background: linear-gradient(45deg, #e94560, #ff6b6b);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(233, 69, 96, 0.4);
+            font-weight: bold;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .action-button::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+        
+        .action-button:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+        
+        .action-button:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 10px 30px rgba(233, 69, 96, 0.6);
+        }
+        
+        /* TABLE STYLES */
+        .limit-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: rgba(0,0,0,0.3);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .limit-table th, .limit-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .limit-table th {
+            background: rgba(233, 69, 96, 0.3);
+            color: #ffd700;
+            font-weight: bold;
+        }
+        
+        .limit-table tr {
+            transition: all 0.3s ease;
+        }
+        
+        .limit-table tr:hover {
+            background: rgba(255,255,255,0.05);
+            transform: scale(1.02);
+        }
+        
+        /* CONTINUITY BOX */
+        .continuity-box {
+            background: linear-gradient(135deg, rgba(52, 152, 219, 0.2), rgba(155, 89, 182, 0.2));
+            border: 2px solid #3498db;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+        }
+        
+        .continuity-box h4 {
+            color: #3498db;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+        
+        /* Loading Animation */
+        .loading-dots {
+            display: inline-block;
+            animation: loadingDots 1.5s infinite;
+        }
+        
+        @keyframes loadingDots {
+            0% { content: "."; }
+            33% { content: ".."; }
+            66% { content: "..."; }
+        }
+        
+        /* Success Animation */
+        .success-checkmark {
+            display: inline-block;
+            color: #00ff88;
+            animation: checkmarkPop 0.5s ease-out;
+        }
+        
+        @keyframes checkmarkPop {
+            0% {
+                transform: scale(0) rotate(45deg);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.2) rotate(-5deg);
+            }
+            100% {
+                transform: scale(1) rotate(0deg);
+                opacity: 1;
+            }
+        }
+        
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .technowave-header h1 {
+                font-size: 2rem;
+            }
+            
+            .tab-button {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+            
+            .technique-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .formula {
+                font-size: 1rem !important;
+            }
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.3);
+            border-radius: 5px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #e94560, #533483);
+            border-radius: 5px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #ff6b6b, #3498db);
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background Particles -->
+    <div class="particles" id="particles"></div>
+    
+    <div class="main-container">
+        <!-- HEADER PRINCIPALE -->
+        <div class="technowave-header">
+            <h1>🌊 TECHNOWAVE</h1>
+            <div class="episode-title">Missione 2 - Episodio 1</div>
+            <div class="subtitle">Il Limite della Precisione: Quando l'IoT incontra l'Infinito</div>
+        </div>
+        
+        <!-- INTRO STORIA -->
+        <div class="story-intro">
+            <h2>📱 LA SFIDA CRITICA</h2>
+            <p>
+                <strong>Milano, Headquarters Technowave - Ore 9:00</strong>
+            </p>
+            <p>
+                Il team di Technowave si riunisce d'urgenza nella sala conferenze. Il loro nuovo dispositivo IoT per il monitoraggio ambientale 
+                sta per essere presentato a un importante cliente, ma durante i test finali sono emersi problemi critici con gli algoritmi 
+                di ottimizzazione dei sensori.
+            </p>
+            <p>
+                Alex Chen, CEO visionario, convoca tutto il team: "Ragazzi, abbiamo 2 ore prima della demo. I nostri sensori stanno producendo 
+                valori anomali quando si avvicinano ai limiti di rilevazione. Dobbiamo capire il comportamento matematico di questi algoritmi!"
+            </p>
+            
+            <!-- PERSONAGGI -->
+            <div class="characters-panel">
+                <div class="character-card" style="--index: 0;">
+                    <div class="emoji">👑</div>
+                    <div class="name">Alex Chen</div>
+                    <div class="role">CEO - Visionario e coordinatore</div>
+                </div>
+                <div class="character-card" style="--index: 1;">
+                    <div class="emoji">💻</div>
+                    <div class="name">Maya Rodriguez</div>
+                    <div class="role">CTO - Esperta IA</div>
+                </div>
+                <div class="character-card" style="--index: 2;">
+                    <div class="emoji">🔧</div>
+                    <div class="name">Luca Bianchi</div>
+                    <div class="role">Head of Engineering - Specialista Robotica</div>
+                </div>
+                <div class="character-card" style="--index: 3;">
+                    <div class="emoji">💰</div>
+                    <div class="name">Sofia Petrov</div>
+                    <div class="role">CFO - Genio Finanza e Dati</div>
+                </div>
+                <div class="character-card" style="--index: 4;">
+                    <div class="emoji">🎨</div>
+                    <div class="name">Omar Hassan</div>
+                    <div class="role">Head of Design - Creativo UX</div>
+                </div>
+            </div>
+            
+            <div class="warning-box">
+                <h3>⚡ SITUAZIONE CRITICA</h3>
+                <p>
+                    <strong>12 PROBLEMI DA RISOLVERE PRIMA DELLA DEMO!</strong><br>
+                    Ogni team deve analizzare 3 diversi algoritmi del dispositivo IoT usando i LIMITI matematici.
+                </p>
+            </div>
+        </div>
+        
+        <!-- TAB NAVIGATION -->
+        <div class="tab-navigation">
+            <button class="tab-button active" onclick="openTab('theory')">
+                <span>📚 Teoria Completa</span>
+            </button>
+            <button class="tab-button" onclick="openTab('techniques')">
+                <span>🛠️ Tecniche Avanzate</span>
+            </button>
+            <button class="tab-button" onclick="openTab('mission')">
+                <span>🚀 Missione Team</span>
+            </button>
+        </div>
+        
+        <!-- TAB CONTENTS -->
+        <!-- TEORIA -->
+        <div id="theory" class="tab-content active">
+            <div class="theory-box">
+                <h3>🎯 Maya Rodriguez spiega: "La TEORIA COMPLETA dei LIMITI"</h3>
+                <p>
+                    "Per ottimizzare i nostri sensori IoT, dobbiamo comprendere a fondo il comportamento matematico 
+                    delle funzioni nei punti critici. Il concetto di LIMITE è fondamentale!"
+                </p>
+                
+                <div class="formula-box">
+                    <h3>📐 DEFINIZIONE RIGOROSA DI LIMITE</h3>
+                    <div class="formula">
+                        $$\lim_{x \to c} f(x) = L$$
+                    </div>
+                    <p style="margin-top: 15px;">
+                        <strong>Definizione ε-δ (Cauchy):</strong><br>
+                        Per ogni $\varepsilon > 0$ esiste un $\delta > 0$ tale che:<br>
+                        se $0 < |x - c| < \delta$, allora $|f(x) - L| < \varepsilon$
+                    </p>
+                </div>
+                
+                <h4>📊 1. LIMITI FINITI per x → valore finito</h4>
+                <p>
+                    Quando il sensore si avvicina a un valore specifico di input, l'output converge a un valore preciso.
+                </p>
+                <div class="example-box">
+                    <h4>Esempio IoT - Sensore di Prossimità:</h4>
+                    <div class="problem">
+                        Il segnale del sensore: $S(d) = \frac{100}{d^2 + 1}$ dove d è la distanza in cm
+                    </div>
+                    <div class="solution">
+                        <strong>Calcolo:</strong> $\lim_{d \to 3} S(d) = \frac{100}{3^2 + 1} = \frac{100}{10} = 10$ unità<br>
+                        <em>Interpretazione: A 3 cm, il sensore rileva un'intensità di 10 unità</em>
+                    </div>
+                </div>
+                
+                <h4>📊 2. LIMITI INFINITI per x → valore finito</h4>
+                <p>
+                    Situazione critica: il sensore va in overflow quando ci avviciniamo a certi valori.
+                </p>
+                <div class="example-box">
+                    <h4>Esempio IoT - Sensore di Corrente:</h4>
+                    <div class="problem">
+                        Resistenza dinamica: $R(I) = \frac{5}{I - 2}$ dove I è la corrente in Ampere
+                    </div>
+                    <div class="solution">
+                        <strong>Analisi:</strong><br>
+                        $\lim_{I \to 2^+} R(I) = +\infty$ (overflow positivo)<br>
+                        $\lim_{I \to 2^-} R(I) = -\infty$ (overflow negativo)<br>
+                        <em>⚠️ Alert: Punto critico a I = 2A, il sensore può danneggiarsi!</em>
+                    </div>
+                </div>
+                
+                <h4>📊 3. LIMITI FINITI per x → ±∞</h4>
+                <p>
+                    Comportamento asintotico: cosa succede al sensore dopo molto tempo o con valori estremi.
+                </p>
+                <div class="example-box">
+                    <h4>Esempio IoT - Efficienza Batteria:</h4>
+                    <div class="problem">
+                        Efficienza nel tempo: $E(t) = \frac{3t^2 + 100}{t^2 + 50}$ dove t è in ore
+                    </div>
+                    <div class="solution">
+                        <strong>Calcolo limite:</strong><br>
+                        $$\lim_{t \to \infty} E(t) = \lim_{t \to \infty} \frac{3 + \frac{100}{t^2}}{1 + \frac{50}{t^2}} = 3$$
+                        <em>Interpretazione: L'efficienza si stabilizza al 300% del valore base</em>
+                    </div>
+                </div>
+                
+                <h4>📊 4. LIMITI INFINITI per x → ±∞</h4>
+                <p>
+                    Crescita illimitata: quando i dati del sensore crescono senza controllo.
+                </p>
+                <div class="example-box">
+                    <h4>Esempio IoT - Data Storage:</h4>
+                    <div class="problem">
+                        Crescita dati: $D(n) = n^3 - 100n$ GB dopo n giorni
+                    </div>
+                    <div class="solution">
+                        $\lim_{n \to \infty} D(n) = \lim_{n \to \infty} n^3(1 - \frac{100}{n^2}) = +\infty$<br>
+                        <em>⚠️ Necessario piano di scaling del cloud storage!</em>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="continuity-box">
+                <h4>🔗 Luca Bianchi approfondisce: "CONTINUITÀ e DISCONTINUITÀ nei Sensori"</h4>
+                
+                <div class="formula-box">
+                    <h3>Definizione di CONTINUITÀ</h3>
+                    <p>Una funzione $f(x)$ è continua in $x = c$ se e solo se:</p>
+                    <div class="formula">
+                        $$\lim_{x \to c} f(x) = f(c)$$
+                    </div>
+                    <p>Ovvero devono verificarsi TRE condizioni:</p>
+                    <ol style="text-align: left; margin: 15px auto; max-width: 600px;">
+                        <li>$f(c)$ esiste (il sensore ha un valore in quel punto)</li>
+                        <li>$\lim_{x \to c} f(x)$ esiste (il limite esiste)</li>
+                        <li>I due valori coincidono</li>
+                    </ol>
+                </div>
+                
+                <h4>⚡ I TRE TIPI di DISCONTINUITÀ nei nostri algoritmi:</h4>
+                
+                <div class="technique-grid">
+                    <div class="technique-card">
+                        <h4>1️⃣ Discontinuità di PRIMA SPECIE (Eliminabile)</h4>
+                        <p><strong>Caratteristica:</strong> Il limite esiste finito ma $f(c)$ non è definita o è diversa dal limite</p>
+                        <p><strong>Esempio IoT:</strong></p>
+                        <div class="formula">
+                            $$f(x) = \begin{cases}
+                            \frac{x^2-4}{x-2} & \text{se } x \neq 2 \\
+                            5 & \text{se } x = 2
+                            \end{cases}$$
+                        </div>
+                        <p>$\lim_{x \to 2} f(x) = 4 \neq f(2) = 5$</p>
+                        <p style="color: #00ff88;">✅ Soluzione: Riprogrammare il sensore per f(2) = 4</p>
+                    </div>
+                    
+                    <div class="technique-card">
+                        <h4>2️⃣ Discontinuità di SECONDA SPECIE (Salto)</h4>
+                        <p><strong>Caratteristica:</strong> I limiti destro e sinistro esistono finiti ma sono diversi</p>
+                        <p><strong>Esempio IoT:</strong></p>
+                        <div class="formula">
+                            $$f(x) = \begin{cases}
+                            2x + 1 & \text{se } x < 3 \\
+                            x^2 & \text{se } x \geq 3
+                            \end{cases}$$
+                        </div>
+                        <p>$\lim_{x \to 3^-} f(x) = 7$, $\lim_{x \to 3^+} f(x) = 9$</p>
+                        <p>Salto = $9 - 7 = 2$</p>
+                        <p style="color: #ff6b6b;">⚠️ Tipico degli switch ON/OFF</p>
+                    </div>
+                    
+                    <div class="technique-card">
+                        <h4>3️⃣ Discontinuità di TERZA SPECIE</h4>
+                        <p><strong>Caratteristica:</strong> Almeno uno dei limiti non esiste o è infinito</p>
+                        <p><strong>Esempio IoT:</strong></p>
+                        <div class="formula">
+                            $$f(x) = \frac{1}{x-5}$$
+                        </div>
+                        <p>$\lim_{x \to 5^-} f(x) = -\infty$</p>
+                        <p>$\lim_{x \to 5^+} f(x) = +\infty$</p>
+                        <p style="color: #ffff00;">💥 CRITICO: Possibile danneggiamento hardware!</p>
+                    </div>
+                </div>
+                
+                <div class="example-box">
+                    <h4>Test Pratico - Analisi Completa di Continuità:</h4>
+                    <div class="problem">
+                        Sensore multi-modalità: 
+                        $$S(t) = \begin{cases}
+                        t^2 + 1 & \text{se } t < 1 \\
+                        3 & \text{se } t = 1 \\
+                        2t + k & \text{se } t > 1
+                        \end{cases}$$
+                        Per quale valore di k la funzione è continua?
+                    </div>
+                    <div class="solution">
+                        <strong>Soluzione:</strong><br>
+                        1. $\lim_{t \to 1^-} S(t) = 1^2 + 1 = 2$<br>
+                        2. $S(1) = 3$<br>
+                        3. $\lim_{t \to 1^+} S(t) = 2(1) + k = 2 + k$<br>
+                        Per continuità: $2 = 3 = 2 + k$ → Impossibile!<br>
+                        Ma se vogliamo almeno continuità da destra: $3 = 2 + k$ → $k = 1$
+                    </div>
+                </div>
+            </div>
+            
+            <div class="checklist">
+                <h3>✅ Checkpoint Comprensione - Sofia Petrov verifica:</h3>
+                <label><input type="checkbox"> <span>Comprendo la differenza tra limiti finiti e infiniti</span></label>
+                <label><input type="checkbox"> <span>So analizzare il comportamento per x → ∞</span></label>
+                <label><input type="checkbox"> <span>Riconosco quando una funzione è continua</span></label>
+                <label><input type="checkbox"> <span>Identifico i tre tipi di discontinuità (prima, seconda e terza specie)</span></label>
+                <label><input type="checkbox"> <span>So interpretare i limiti nel contesto IoT</span></label>
+                <label><input type="checkbox"> <span>Capisco quando un sensore può andare in overflow</span></label>
+            </div>
+        </div>
+        
+        <!-- TECNICHE -->
+        <div id="techniques" class="tab-content">
+            <div class="theory-box">
+                <h3>⚙️ Sofia Petrov presenta: "TECNICHE COMPLETE di CALCOLO"</h3>
+                <p>
+                    "Ho preparato un toolkit completo per risolvere OGNI tipo di limite che potremmo incontrare 
+                    nei nostri algoritmi IoT. Ogni tecnica è in una sezione espandibile per facilitare lo studio!"
+                </p>
+            </div>
+            
+            <!-- TECNICA 1 -->
+            <button class="collapsible">🔧 TECNICA 1: SOSTITUZIONE DIRETTA</button>
+            <div class="collapsible-content">
+                <div class="collapsible-content-inner">
+                    <div class="formula-box">
+                        <h3>Quando usarla:</h3>
+                        <p>Quando la funzione è continua nel punto considerato</p>
+                    </div>
+                    <div class="example-box">
+                        <h4>Esempio Base:</h4>
+                        <div class="problem">
+                            $\lim_{x \to 2} (x^2 + 3x - 1)$
+                        </div>
+                        <div class="solution">
+                            Sostituendo: $2^2 + 3(2) - 1 = 4 + 6 - 1 = 9$
+                        </div>
+                    </div>
+                    <div class="example-box">
+                        <h4>Esempio Avanzato:</h4>
+                        <div class="problem">
+                            $\lim_{x \to 2} \frac{x^3 - 3x^2 + 5}{x^2 + 1}$
+                        </div>
+                        <div class="solution">
+                            Sostituendo direttamente: $\frac{8 - 12 + 5}{4 + 1} = \frac{1}{5}$
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- TECNICA 2 -->
+            <button class="collapsible">🔧 TECNICA 2: FORME INDETERMINATE</button>
+            <div class="collapsible-content">
+                <div class="collapsible-content-inner">
+                    <div class="formula-box">
+                        <h3>Le 7 forme indeterminate classiche:</h3>
+                        <div class="formula">
+                            $$\frac{0}{0}, \frac{\infty}{\infty}, 0 \cdot \infty, \infty - \infty, 0^0, 1^{\infty}, \infty^0$$
+                        </div>
+                    </div>
+                    
+                    <h4 style="color: #ffd700;">Strategia per $\frac{0}{0}$:</h4>
+                    <div class="example-box">
+                        <h4>a) Scomposizione algebrica:</h4>
+                        <div class="problem">
+                            $\lim_{x \to 3} \frac{x^2 - 9}{x^2 - 2x - 3}$
+                        </div>
+                        <div class="solution">
+                            $= \lim_{x \to 3} \frac{(x-3)(x+3)}{(x-3)(x+1)} = \lim_{x \to 3} \frac{x+3}{x+1} = \frac{6}{4} = \frac{3}{2}$
+                        </div>
+                    </div>
+                    
+                    <div class="example-box">
+                        <h4>b) Razionalizzazione:</h4>
+                        <div class="problem">
+                            $\lim_{x \to 0} \frac{\sqrt{x+4} - 2}{x}$
+                        </div>
+                        <div class="solution">
+                            Moltiplico per il coniugato:<br>
+                            $= \lim_{x \to 0} \frac{(\sqrt{x+4} - 2)(\sqrt{x+4} + 2)}{x(\sqrt{x+4} + 2)}$<br>
+                            $= \lim_{x \to 0} \frac{x+4-4}{x(\sqrt{x+4} + 2)} = \lim_{x \to 0} \frac{1}{\sqrt{x+4} + 2} = \frac{1}{4}$
+                        </div>
+                    </div>
+                    
+                    <h4 style="color: #ffd700;">Strategia per $\frac{\infty}{\infty}$:</h4>
+                    <div class="example-box">
+                        <h4>Confronto dei gradi:</h4>
+                        <div class="problem">
+                            $\lim_{x \to \infty} \frac{3x^3 - 2x^2 + 5x - 1}{x^3 + 7x - 10}$
+                        </div>
+                        <div class="solution">
+                            Divido per $x^3$ (grado massimo):<br>
+                            $= \lim_{x \to \infty} \frac{3 - \frac{2}{x} + \frac{5}{x^2} - \frac{1}{x^3}}{1 + \frac{7}{x^2} - \frac{10}{x^3}} = \frac{3}{1} = 3$
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- TECNICA 3 -->
+            <button class="collapsible">🔧 TECNICA 3: LIMITI con FUNZIONI COMPOSTE</button>
+            <div class="collapsible-content">
+                <div class="collapsible-content-inner">
+                    <div class="example-box">
+                        <h4>Cambio di variabile:</h4>
+                        <div class="problem">
+                            $\lim_{x \to 0} \frac{\sin(3x)}{5x}$
+                        </div>
+                        <div class="solution">
+                            Pongo $t = 3x$, quando $x \to 0$ anche $t \to 0$:<br>
+                            $= \lim_{t \to 0} \frac{\sin(t)}{5 \cdot \frac{t}{3}} = \frac{3}{5} \lim_{t \to 0} \frac{\sin(t)}{t} = \frac{3}{5} \cdot 1 = \frac{3}{5}$
+                        </div>
+                    </div>
+                    
+                    <div class="example-box">
+                        <h4>Composizione complessa:</h4>
+                        <div class="problem">
+                            $\lim_{x \to 0} \frac{e^{2x} - 1}{\sin(3x)}$
+                        </div>
+                        <div class="solution">
+                            $= \lim_{x \to 0} \frac{e^{2x} - 1}{2x} \cdot \frac{2x}{\sin(3x)}$<br>
+                            $= \lim_{x \to 0} \frac{e^{2x} - 1}{2x} \cdot \frac{2x}{3x} \cdot \frac{3x}{\sin(3x)}$<br>
+                            $= 1 \cdot \frac{2}{3} \cdot \frac{1}{1} = \frac{2}{3}$
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- TECNICA 4 -->
+            <button class="collapsible">🔧 TECNICA 4: TEOREMA del CONFRONTO</button>
+            <div class="collapsible-content">
+                <div class="collapsible-content-inner">
+                    <div class="formula-box">
+                        <h3>Teorema del Confronto (Sandwich)</h3>
+                        <p>Se $g(x) \leq f(x) \leq h(x)$ e $\lim g(x) = \lim h(x) = L$, allora $\lim f(x) = L$</p>
+                    </div>
+                    
+                    <div class="example-box">
+                        <h4>Esempio con oscillazione limitata:</h4>
+                        <div class="problem">
+                            $\lim_{x \to 0} x^2 \cos\left(\frac{1}{x}\right)$
+                        </div>
+                        <div class="solution">
+                            Poiché $-1 \leq \cos\left(\frac{1}{x}\right) \leq 1$:<br>
+                            $-x^2 \leq x^2 \cos\left(\frac{1}{x}\right) \leq x^2$<br>
+                            $\lim_{x \to 0} (-x^2) = 0$ e $\lim_{x \to 0} x^2 = 0$<br>
+                            Quindi per il teorema del confronto: $\lim_{x \to 0} x^2 \cos\left(\frac{1}{x}\right) = 0$
+                        </div>
+                    </div>
+                    
+                    <div class="example-box">
+                        <h4>Esempio IoT - Rumore del sensore:</h4>
+                        <div class="problem">
+                            Segnale con rumore: $N(t) = \frac{\sin(t^2)}{t}$ per $t \to \infty$
+                        </div>
+                        <div class="solution">
+                            Poiché $-1 \leq \sin(t^2) \leq 1$:<br>
+                            $-\frac{1}{t} \leq \frac{\sin(t^2)}{t} \leq \frac{1}{t}$<br>
+                            Per $t \to \infty$: entrambi i limiti vanno a 0<br>
+                            Quindi il rumore tende a zero (segnale pulito)
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- TECNICA 5 -->
+            <button class="collapsible">🔧 TECNICA 5: LIMITI di FUNZIONI SPECIALI</button>
+            <div class="collapsible-content">
+                <div class="collapsible-content-inner">
+                    <h4 style="color: #ffd700;">Funzioni Trigonometriche:</h4>
+                    <div class="example-box">
+                        <h4>Limite complesso:</h4>
+                        <div class="problem">
+                            $\lim_{x \to \pi/4} \frac{\sin x - \cos x}{1 - \tan x}$
+                        </div>
+                        <div class="solution">
+                            A $x = \pi/4$: $\sin(\pi/4) = \cos(\pi/4) = \frac{\sqrt{2}}{2}$, $\tan(\pi/4) = 1$<br>
+                            Forma $\frac{0}{0}$! Uso la regola di L'Hôpital (anticipo):<br>
+                            Derivando: $\frac{\cos x + \sin x}{-\sec^2 x}$<br>
+                            Per $x = \pi/4$: $\frac{\sqrt{2}}{-2} = -\frac{\sqrt{2}}{2}$
+                        </div>
+                    </div>
+                    
+                    <h4 style="color: #ffd700;">Funzioni Esponenziali e Logaritmiche:</h4>
+                    <div class="example-box">
+                        <h4>Forma $1^{\infty}$:</h4>
+                        <div class="problem">
+                            $\lim_{x \to \infty} \left(\frac{x+3}{x-2}\right)^{2x}$
+                        </div>
+                        <div class="solution">
+                            Riscrivo: $\left(1 + \frac{5}{x-2}\right)^{2x}$<br>
+                            Pongo $t = \frac{x-2}{5}$, quando $x \to \infty$, $t \to \infty$:<br>
+                            $= \lim_{t \to \infty} \left(1 + \frac{1}{t}\right)^{10t+4} = e^{10}$
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- TECNICA 6 -->
+            <button class="collapsible">🔧 TECNICA 6: METODO delle SOSTITUZIONI</button>
+            <div class="collapsible-content">
+                <div class="collapsible-content-inner">
+                    <div class="example-box">
+                        <h4>Sostituzione radicale:</h4>
+                        <div class="problem">
+                            $\lim_{x \to 0} \frac{\sqrt[3]{1+x} - 1}{x}$
+                        </div>
+                        <div class="solution">
+                            Pongo $t = \sqrt[3]{1+x}$, quindi $t^3 = 1+x$ e $x = t^3 - 1$<br>
+                            Quando $x \to 0$, $t \to 1$:<br>
+                            $\lim_{t \to 1} \frac{t - 1}{t^3 - 1} = \lim_{t \to 1} \frac{t - 1}{(t-1)(t^2+t+1)}$<br>
+                            $= \lim_{t \to 1} \frac{1}{t^2+t+1} = \frac{1}{3}$
+                        </div>
+                    </div>
+                    
+                    <div class="example-box">
+                        <h4>Sostituzione trigonometrica:</h4>
+                        <div class="problem">
+                            $\lim_{x \to 0} \frac{1 - \cos(2x)}{x \sin(x)}$
+                        </div>
+                        <div class="solution">
+                            Uso l'identità: $1 - \cos(2x) = 2\sin^2(x)$<br>
+                            $= \lim_{x \to 0} \frac{2\sin^2(x)}{x \sin(x)} = \lim_{x \to 0} \frac{2\sin(x)}{x}$<br>
+                            $= 2 \lim_{x \to 0} \frac{\sin(x)}{x} = 2 \cdot 1 = 2$
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- LIMITI NOTEVOLI -->
+            <button class="collapsible">📌 TUTTI I LIMITI NOTEVOLI - Schema Completo</button>
+            <div class="collapsible-content">
+                <div class="collapsible-content-inner">
+                    <h4 style="color: #ffd700;">🔥 Limiti Notevoli Fondamentali:</h4>
+                    
+                    <table class="limit-table">
+                        <thead>
+                            <tr>
+                                <th>Limite</th>
+                                <th>Risultato</th>
+                                <th>Applicazione IoT</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>$\lim_{x \to 0} \frac{\sin x}{x}$</td>
+                                <td>$1$</td>
+                                <td>Segnali oscillanti</td>
+                            </tr>
+                            <tr>
+                                <td>$\lim_{x \to 0} \frac{1 - \cos x}{x^2}$</td>
+                                <td>$\frac{1}{2}$</td>
+                                <td>Vibrazioni sensori</td>
+                            </tr>
+                            <tr>
+                                <td>$\lim_{x \to 0} \frac{\tan x}{x}$</td>
+                                <td>$1$</td>
+                                <td>Angoli piccoli</td>
+                            </tr>
+                            <tr>
+                                <td>$\lim_{x \to 0} \frac{e^x - 1}{x}$</td>
+                                <td>$1$</td>
+                                <td>Crescita esponenziale</td>
+                            </tr>
+                            <tr>
+                                <td>$\lim_{x \to 0} \frac{a^x - 1}{x}$</td>
+                                <td>$\ln a$</td>
+                                <td>Decadimento batteria</td>
+                            </tr>
+                            <tr>
+                                <td>$\lim_{x \to 0} \frac{\ln(1 + x)}{x}$</td>
+                                <td>$1$</td>
+                                <td>Logaritmi dati</td>
+                            </tr>
+                            <tr>
+                                <td>$\lim_{x \to 0} \frac{\arcsin x}{x}$</td>
+                                <td>$1$</td>
+                                <td>Inversione segnali</td>
+                            </tr>
+                            <tr>
+                                <td>$\lim_{x \to 0} \frac{\arctan x}{x}$</td>
+                                <td>$1$</td>
+                                <td>Fase segnali</td>
+                            </tr>
+                            <tr>
+                                <td>$\lim_{x \to \infty} \left(1 + \frac{1}{x}\right)^x$</td>
+                                <td>$e$</td>
+                                <td>Interesse composto</td>
+                            </tr>
+                            <tr>
+                                <td>$\lim_{x \to \infty} \left(1 + \frac{k}{x}\right)^x$</td>
+                                <td>$e^k$</td>
+                                <td>Crescita parametrica</td>
+                            </tr>
+                            <tr>
+                                <td>$\lim_{x \to 0^+} x \ln x$</td>
+                                <td>$0$</td>
+                                <td>Entropia minima</td>
+                            </tr>
+                            <tr>
+                                <td>$\lim_{x \to 0^+} x^x$</td>
+                                <td>$1$</td>
+                                <td>Auto-scaling</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <h4 style="color: #ff6b6b; margin-top: 20px;">⚡ Limiti Notevoli Avanzati:</h4>
+                    
+                    <div class="formula-box" style="background: rgba(0,0,0,0.5);">
+                        <h5>Serie di Taylor (approssimazioni per x → 0):</h5>
+                        <ul style="text-align: left; list-style: none;">
+                            <li>$\sin x = x - \frac{x^3}{3!} + \frac{x^5}{5!} - ...$</li>
+                            <li>$\cos x = 1 - \frac{x^2}{2!} + \frac{x^4}{4!} - ...$</li>
+                            <li>$e^x = 1 + x + \frac{x^2}{2!} + \frac{x^3}{3!} + ...$</li>
+                            <li>$\ln(1+x) = x - \frac{x^2}{2} + \frac{x^3}{3} - ...$</li>
+                            <li>$(1+x)^n = 1 + nx + \frac{n(n-1)}{2!}x^2 + ...$</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="example-box">
+                        <h4>Esempio di Applicazione Combinata:</h4>
+                        <div class="problem">
+                            $\lim_{x \to 0} \frac{e^{2x} - e^x - x}{x^2}$
+                        </div>
+                        <div class="solution">
+                            Usando le serie di Taylor:<br>
+                            $e^{2x} = 1 + 2x + \frac{(2x)^2}{2!} + ... = 1 + 2x + 2x^2 + ...$<br>
+                            $e^x = 1 + x + \frac{x^2}{2!} + ... = 1 + x + \frac{x^2}{2} + ...$<br>
+                            
+                            Quindi: $e^{2x} - e^x - x = (1 + 2x + 2x^2) - (1 + x + \frac{x^2}{2}) - x$<br>
+                            $= 2x^2 - \frac{x^2}{2} = \frac{3x^2}{2}$<br>
+                            
+                            Limite finale: $\lim_{x \to 0} \frac{3x^2/2}{x^2} = \frac{3}{2}$
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- TECNICHE AVANZATE -->
+            <button class="collapsible">🚀 TECNICHE AVANZATE e TRUCCHI</button>
+            <div class="collapsible-content">
+                <div class="collapsible-content-inner">
+                    <h4 style="color: #ffd700;">Regola di L'Hôpital (Preview):</h4>
+                    <div class="formula-box">
+                        <p>Se $\lim_{x \to c} \frac{f(x)}{g(x)}$ è nella forma $\frac{0}{0}$ o $\frac{\infty}{\infty}$:</p>
+                        <div class="formula">
+                            $$\lim_{x \to c} \frac{f(x)}{g(x)} = \lim_{x \to c} \frac{f'(x)}{g'(x)}$$
+                        </div>
+                    </div>
+                    
+                    <h4 style="color: #ff6b6b;">Trucchi per Limiti Difficili:</h4>
+                    <div class="example-box">
+                        <h4>Trucco del logaritmo:</h4>
+                        <div class="problem">
+                            $\lim_{x \to 0^+} x^x$
+                        </div>
+                        <div class="solution">
+                            Pongo $y = x^x$, quindi $\ln y = x \ln x$<br>
+                            $\lim_{x \to 0^+} \ln y = \lim_{x \to 0^+} x \ln x$<br>
+                            Riscrivo: $\lim_{x \to 0^+} \frac{\ln x}{1/x}$ (forma $\frac{-\infty}{\infty}$)<br>
+                            Con L'Hôpital: $\lim_{x \to 0^+} \frac{1/x}{-1/x^2} = \lim_{x \to 0^+} (-x) = 0$<br>
+                            Quindi $\ln y \to 0$, da cui $y \to e^0 = 1$
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="checklist">
+                <h3>✅ Master Checklist - Omar Hassan verifica le competenze:</h3>
+                <label><input type="checkbox"> <span>Padroneggio le 7 forme indeterminate</span></label>
+                <label><input type="checkbox"> <span>So applicare scomposizione e razionalizzazione</span></label>
+                <label><input type="checkbox"> <span>Conosco tutti i limiti notevoli fondamentali</span></label>
+                <label><input type="checkbox"> <span>So usare il teorema del confronto</span></label>
+                <label><input type="checkbox"> <span>Applico correttamente le sostituzioni</span></label>
+                <label><input type="checkbox"> <span>Riconosco quando usare le serie di Taylor</span></label>
+                <label><input type="checkbox"> <span>So gestire limiti con funzioni composte</span></label>
+                <label><input type="checkbox"> <span>Interpreto i risultati nel contesto IoT</span></label>
+            </div>
+        </div>
+        
+        <!-- MISSIONE -->
+        <div id="mission" class="tab-content">
+            <div class="mission-box">
+                <h3>🚨 CODICE ROSSO - MISSIONE CRITICA ESTESA!</h3>
+                <p style="font-size: 1.2rem; margin-bottom: 20px;">
+                    Alex Chen annuncia: "Team, abbiamo identificato 12 problemi critici negli algoritmi del nostro dispositivo IoT. 
+                    Ogni gruppo deve risolvere 3 problemi di difficoltà crescente PRIMA della demo!"
+                </p>
+                <div class="mission-timer">
+                    ⏰ TEMPO MASSIMO: 45 MINUTI (15 min/problema)
+                </div>
+                <p style="text-align: center; color: #ffd700; font-size: 1.1rem;">
+                    Ogni gruppo presenterà le soluzioni complete con interpretazione IoT!
+                </p>
+            </div>
+            
+            <!-- TEAM ALPHA -->
+            <div class="group-card" style="border-color: #ff0000;">
+                <h4>🔴 TEAM ALPHA - Algoritmi Sensore Temperatura</h4>
+                <div style="background: rgba(255,0,0,0.1); padding: 20px; border-radius: 10px; margin-top: 15px;">
+                    <p style="color: #ffd700; font-weight: bold;">Maya Rodriguez assegna 3 PROBLEMI CRITICI:</p>
+                    
+                    <div class="exercise-section">
+                        <h5>📝 Problema 1: Calibrazione Sensore (Livello Base)</h5>
+                        <p><strong>Algoritmo:</strong></p>
+                        <div class="formula">$$T_1(x) = \lim_{x \to 4} \frac{x^2 - 16}{x - 4}$$</div>
+                        <p><strong>Task:</strong></p>
+                        <ol>
+                            <li>Calcolare il limite usando la scomposizione</li>
+                            <li>Interpretare: a che temperatura si calibra il sensore?</li>
+                            <li>Verificare con valori x = 3.9, 3.99, 3.999</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="exercise-section">
+                        <h5>📝 Problema 2: Risposta Non Lineare (Livello Medio)</h5>
+                        <p><strong>Algoritmo:</strong></p>
+                        <div class="formula">$$T_2(x) = \lim_{x \to 0} \frac{\sqrt{x+9} - 3}{x}$$</div>
+                        <p><strong>Task:</strong></p>
+                        <ol>
+                            <li>Calcolare usando la razionalizzazione</li>
+                            <li>Determinare la sensibilità del sensore vicino allo zero</li>
+                            <li>Proporre una correzione se il valore è troppo basso</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="exercise-section">
+                        <h5>📝 Problema 3: Comportamento Asintotico (Livello Avanzato)</h5>
+                        <p><strong>Algoritmo complesso:</strong></p>
+                        <div class="formula">$$T_3(t) = \lim_{t \to \infty} \frac{3t^2 + \sin(t)}{t^2 - \cos(t)} \cdot \left(1 + \frac{2}{t}\right)^t$$</div>
+                        <p><strong>Task:</strong></p>
+                        <ol>
+                            <li>Separare il limite in due parti e calcolare</li>
+                            <li>Determinare la temperatura massima teorica del sistema</li>
+                            <li>Calcolare dopo quanto tempo si raggiunge il 95% del limite</li>
+                            <li>Verificare che il sistema sia stabile (limite finito)</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- TEAM BETA -->
+            <div class="group-card" style="border-color: #0000ff;">
+                <h4>🔵 TEAM BETA - Algoritmi Consumo Energetico</h4>
+                <div style="background: rgba(0,0,255,0.1); padding: 20px; border-radius: 10px; margin-top: 15px;">
+                    <p style="color: #ffd700; font-weight: bold;">Luca Bianchi assegna 3 PROBLEMI ENERGETICI:</p>
+                    
+                    <div class="exercise-section">
+                        <h5>📝 Problema 1: Picco di Avvio (Livello Base)</h5>
+                        <p><strong>Consumo iniziale:</strong></p>
+                        <div class="formula">$$P_1(t) = \lim_{t \to 2} \frac{t^3 - 8}{t^2 - 4}$$</div>
+                        <p><strong>Task:</strong></p>
+                        <ol>
+                            <li>Identificare la forma indeterminata e risolverla</li>
+                            <li>Calcolare il consumo in Watt al tempo t = 2s</li>
+                            <li>È sostenibile? (soglia critica: 5W)</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="exercise-section">
+                        <h5>📝 Problema 2: Efficienza Dinamica (Livello Medio)</h5>
+                        <p><strong>Modello di efficienza:</strong></p>
+                        <div class="formula">$$P_2(n) = \lim_{n \to \infty} \frac{5n^3 - 2n^2 + 100}{2n^3 + n - 50}$$</div>
+                        <p><strong>Task:</strong></p>
+                        <ol>
+                            <li>Calcolare il limite all'infinito</li>
+                            <li>Determinare l'efficienza energetica asintotica</li>
+                            <li>Confrontare con il target di efficienza (2.5)</li>
+                            <li>Suggerire ottimizzazioni se necessario</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="exercise-section">
+                        <h5>📝 Problema 3: Oscillazioni di Carico (Livello Avanzato)</h5>
+                        <p><strong>Carico oscillante:</strong></p>
+                        <div class="formula">$$P_3(x) = \lim_{x \to 0} \frac{x \sin(1/x)}{1 - \cos(x)} + \lim_{n \to \infty} \left(1 - \frac{3}{n}\right)^{-2n}$$</div>
+                        <p><strong>Task:</strong></p>
+                        <ol>
+                            <li>Calcolare entrambi i limiti separatamente</li>
+                            <li>Sommare per ottenere il consumo totale</li>
+                            <li>Analizzare la stabilità del sistema</li>
+                            <li>Progettare un filtro se ci sono oscillazioni</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- TEAM GAMMA -->
+            <div class="group-card" style="border-color: #00ff00;">
+                <h4>🟢 TEAM GAMMA - Algoritmi Precisione Sensore</h4>
+                <div style="background: rgba(0,255,0,0.1); padding: 20px; border-radius: 10px; margin-top: 15px;">
+                    <p style="color: #ffd700; font-weight: bold;">Sofia Petrov assegna 3 PROBLEMI di PRECISIONE:</p>
+                    
+                    <div class="exercise-section">
+                        <h5>📝 Problema 1: Errore di Quantizzazione (Livello Base)</h5>
+                        <p><strong>Funzione errore:</strong></p>
+                        <div class="formula">$$e_1(h) = \lim_{h \to 0} \frac{\sin(3h)}{h}$$</div>
+                        <p><strong>Task:</strong></p>
+                        <ol>
+                            <li>Calcolare usando i limiti notevoli</li>
+                            <li>L'errore è accettabile? (soglia: 4)</li>
+                            <li>Creare tabella per h = 0.1, 0.01, 0.001</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="exercise-section">
+                        <h5>📝 Problema 2: Rumore del Sensore (Livello Medio)</h5>
+                        <p><strong>Modello di rumore:</strong></p>
+                        <div class="formula">$$e_2(x) = \lim_{x \to 0} x^2 \sin\left(\frac{1}{x}\right) + \lim_{x \to 0} \frac{\tan(x) - x}{x^3}$$</div>
+                        <p><strong>Task:</strong></p>
+                        <ol>
+                            <li>Usare il teorema del confronto per il primo limite</li>
+                            <li>Usare serie di Taylor per il secondo</li>
+                            <li>Il rumore totale tende a zero? (precisione massima)</li>
+                            <li>Graficare qualitativamente il comportamento</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="exercise-section">
+                        <h5>📝 Problema 3: Deriva Termica (Livello Avanzato)</h5>
+                        <p><strong>Modello complesso di deriva:</strong></p>
+                        <div class="formula">$$e_3(t, x) = \lim_{t \to \infty} \left(\frac{t+1}{t-1}\right)^{2t} \cdot \lim_{x \to 1} \frac{x^n - 1}{x - 1} \text{ dove } n = 5$$</div>
+                        <p><strong>Task:</strong></p>
+                        <ol>
+                            <li>Calcolare il primo limite (forma $1^{\infty}$)</li>
+                            <li>Calcolare il secondo limite (derivata in x = 1)</li>
+                            <li>Moltiplicare per ottenere la deriva totale</li>
+                            <li>Progettare compensazione termica se deriva > 10</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- TEAM DELTA -->
+            <div class="group-card" style="border-color: #ffff00;">
+                <h4>🟡 TEAM DELTA - Algoritmi Crescita Dati Cloud</h4>
+                <div style="background: rgba(255,255,0,0.1); padding: 20px; border-radius: 10px; margin-top: 15px;">
+                    <p style="color: #ffd700; font-weight: bold;">Omar Hassan assegna 3 PROBLEMI di SCALING:</p>
+                    
+                    <div class="exercise-section">
+                        <h5>📝 Problema 1: Upload Rate Base (Livello Base)</h5>
+                        <p><strong>Velocità upload:</strong></p>
+                        <div class="formula">$$U_1(t) = \lim_{t \to 3} \frac{t^2 - 9}{t - 3} \text{ MB/s}$$</div>
+                        <p><strong>Task:</strong></p>
+                        <ol>
+                            <li>Risolvere la forma indeterminata</li>
+                            <li>La velocità è sufficiente? (minimo: 5 MB/s)</li>
+                            <li>Calcolare quanti GB in 1 ora a questa velocità</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="exercise-section">
+                        <h5>📝 Problema 2: Crescita Esponenziale (Livello Medio)</h5>
+                        <p><strong>Modello di crescita:</strong></p>
+                        <div class="formula">$$D_2(n) = \lim_{n \to \infty} \left(1 + \frac{3}{n}\right)^{4n} \text{ TB}$$</div>
+                        <p><strong>Task:</strong></p>
+                        <ol>
+                            <li>Calcolare usando il limite notevole di e</li>
+                            <li>Storage necessario dopo scaling infinito</li>
+                            <li>Costo previsto a $50/TB</li>
+                            <li>Piano di budget per 5 anni</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="exercise-section">
+                        <h5>📝 Problema 3: Compressione Adattiva (Livello Avanzato)</h5>
+                        <p><strong>Algoritmo di compressione:</strong></p>
+                        <div class="formula">$$C(x, n) = \lim_{x \to 0^+} \frac{e^x - 1 - x - \frac{x^2}{2}}{x^3} + \lim_{n \to \infty} n \sin\left(\frac{\pi}{n}\right)$$</div>
+                        <p><strong>Task:</strong></p>
+                        <ol>
+                            <li>Primo limite: usare serie di Taylor di $e^x$</li>
+                            <li>Secondo limite: sostituzione $t = 1/n$</li>
+                            <li>Ratio di compressione totale</li>
+                            <li>Risparmio in % sullo storage</li>
+                            <li>Implementare se ratio > π/2</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mission-box" style="margin-top: 30px; border-color: #ffd700;">
+                <h3>📊 CRITERI DI VALUTAZIONE DETTAGLIATI</h3>
+                <p style="margin-bottom: 15px;">Alex Chen valuterà ogni team su:</p>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                    <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px;">
+                        <h4 style="color: #00ff88;">Correttezza (30%)</h4>
+                        <p style="font-size: 0.9rem;">• Problema 1: 10%<br>• Problema 2: 10%<br>• Problema 3: 10%</p>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px;">
+                        <h4 style="color: #00ff88;">Procedimento (25%)</h4>
+                        <p style="font-size: 0.9rem;">Passaggi chiari e giustificati</p>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px;">
+                        <h4 style="color: #00ff88;">Interpretazione (25%)</h4>
+                        <p style="font-size: 0.9rem;">Contesto IoT e applicazioni</p>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px;">
+                        <h4 style="color: #00ff88;">Presentazione (10%)</h4>
+                        <p style="font-size: 0.9rem;">Grafici e visualizzazioni</p>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px;">
+                        <h4 style="color: #00ff88;">Teamwork (10%)</h4>
+                        <p style="font-size: 0.9rem;">Collaborazione efficace</p>
+                    </div>
+                </div>
+                
+                <h4 style="margin-top: 20px; color: #ff6b6b;">🏆 BONUS SPECIALI:</h4>
+                <ul style="text-align: left; margin-left: 20px;">
+                    <li>+5 punti: Soluzione alternativa creativa</li>
+                    <li>+5 punti: Visualizzazione grafica eccellente</li>
+                    <li>+10 punti: Tutti e 3 i problemi perfetti</li>
+                    <li>+15 punti: Tempo record (< 35 minuti)</li>
+                </ul>
+            </div>
+            
+            <div class="story-intro" style="margin-top: 30px;">
+                <h2>🎉 EPILOGO - Demo di Successo!</h2>
+                <p>
+                    Dopo 45 minuti di intensa collaborazione, tutti i team hanno risolto i 12 problemi critici. 
+                    Il dispositivo IoT di Technowave è perfettamente ottimizzato!
+                </p>
+                <p>
+                    Alex Chen si congratula: <em>"Incredibile lavoro! Avete dimostrato padronanza completa dei LIMITI. 
+                    Il cliente sarà impressionato dalla precisione dei nostri algoritmi!"</em>
+                </p>
+                <p>
+                    Maya Rodriguez conclude: <em>"Ricordate: oggi avete usato i limiti per ottimizzare sensori, 
+                    consumo energetico, precisione e storage cloud. Nel prossimo episodio, le DERIVATE ci permetteranno 
+                    di ottimizzare in tempo reale, e gli INTEGRALI calcoleranno consumi totali e aree sotto le curve dei sensori!"</em>
+                </p>
+                <p style="color: #ffd700; font-size: 1.2rem; text-align: center; margin-top: 20px;">
+                    <strong>🚀 La missione Technowave continua... Prossimo episodio: LE DERIVATE!</strong>
+                </p>
+            </div>
+            
+            <div class="checklist">
+                <h3>✅ Obiettivi Completati nell'Episodio <span class="success-checkmark" style="display: none;">✓</span></h3>
+                <label><input type="checkbox"> <span>Risolto 12 problemi critici del dispositivo IoT</span></label>
+                <label><input type="checkbox"> <span>Padroneggiato teoria completa dei limiti</span></label>
+                <label><input type="checkbox"> <span>Applicato tecniche avanzate di calcolo</span></label>
+                <label><input type="checkbox"> <span>Compreso continuità e i tre tipi di discontinuità</span></label>
+                <label><input type="checkbox"> <span>Memorizzato tutti i limiti notevoli</span></label>
+                <label><input type="checkbox"> <span>Collaborato efficacemente nel team</span></label>
+                <label><input type="checkbox"> <span>Preparato la demo perfetta per il cliente</span></label>
+                <label><input type="checkbox"> <span>Pronti per il prossimo episodio sulle DERIVATE!</span></label>
+            </div>
+            
+            <div style="text-align: center; margin-top: 30px;">
+                <button class="action-button" onclick="window.print()">
+                    🖨️ STAMPA REPORT MISSIONE COMPLETATA
+                </button>
+            </div>
+        </div>
+        
+    </div>
+    
+    <script>
+        // Generate animated particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const numParticles = 30;
+            
+            for (let i = 0; i < numParticles; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 20 + 's';
+                particle.style.animationDuration = (15 + Math.random() * 10) + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+        
+        // Funzione per cambiare scheda
+        function openTab(tabId) {
+            // Nascondi tutti i contenuti
+            const contents = document.getElementsByClassName('tab-content');
+            for (let content of contents) {
+                content.classList.remove('active');
+            }
+            
+            // Rimuovi 'active' da tutti i pulsanti
+            const buttons = document.getElementsByClassName('tab-button');
+            for (let button of buttons) {
+                button.classList.remove('active');
+            }
+            
+            // Mostra il contenuto selezionato
+            document.getElementById(tabId).classList.add('active');
+            
+            // Attiva il pulsante cliccato
+            event.target.closest('.tab-button').classList.add('active');
+            
+            // Scroll smooth all'inizio del contenuto
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            
+            // Re-render MathJax
+            setTimeout(renderMath, 100);
+        }
+        
+        // Gestione sezioni collapsible
+        document.addEventListener('DOMContentLoaded', function() {
+            // Create particles
+            createParticles();
+            
+            // Collapsible sections
+            const collapsibles = document.getElementsByClassName('collapsible');
+            
+            for (let i = 0; i < collapsibles.length; i++) {
+                collapsibles[i].addEventListener('click', function() {
+                    this.classList.toggle('active');
+                    const content = this.nextElementSibling;
+                    content.classList.toggle('show');
+                });
+            }
+            
+            // Checkbox management with localStorage
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            
+            checkboxes.forEach((checkbox, index) => {
+                const savedState = localStorage.getItem(`technowave_v3_checkbox_${index}`);
+                if (savedState === 'true') {
+                    checkbox.checked = true;
+                }
+                
+                checkbox.addEventListener('change', function() {
+                    localStorage.setItem(`technowave_v3_checkbox_${index}`, this.checked);
+                    
+                    // Check if all checkboxes are checked
+                    const allChecked = Array.from(checkboxes).every(cb => cb.checked);
+                    if (allChecked) {
+                        document.querySelector('.success-checkmark').style.display = 'inline-block';
+                    }
+                });
+            });
+            
+            // Add hover sound effect simulation (visual feedback)
+            const cards = document.querySelectorAll('.character-card, .technique-card, .group-card');
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transition = 'all 0.1s ease';
+                    this.style.transform = 'scale(1.05)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 100);
+                });
+            });
+        });
+        
+        // Re-render MathJax quando necessario
+        function renderMath() {
+            if (window.MathJax) {
+                MathJax.typesetPromise().catch(function (err) {
+                    console.log('MathJax re-render error: ', err);
+                });
+            }
+        }
+        
+        // Animation on scroll
+        function animateOnScroll() {
+            const elements = document.querySelectorAll('.exercise-section');
+            const windowHeight = window.innerHeight;
+            
+            elements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                if (elementTop < windowHeight - 100) {
+                    element.style.animation = 'exerciseSlideIn 0.5s ease-out';
+                }
+            });
+        }
+        
+        window.addEventListener('scroll', animateOnScroll);
+    </script>
+</body>
+</html>
